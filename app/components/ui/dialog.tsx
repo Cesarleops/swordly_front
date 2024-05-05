@@ -1,8 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 
 export const DialogOverlay = () => {
   return (
     <div className="fixed inset-0 z-50 bg-neutral-900/50  backdrop-blur-sm backdrop-filter "></div>
+  );
+};
+
+export const BlockClicks = () => {
+  return (
+    <div className="fixed inset-0 z-50 bg-transparent pointer-events-auto"></div>
   );
 };
 
@@ -12,17 +18,20 @@ export const Dialog = ({
   setOpen,
   children,
   blurBack,
+  blockClicksBehind,
 }: {
   className: string;
   blurBack: boolean;
   open: boolean;
   children: React.ReactNode;
+  blockClicksBehind: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   if (!open) return null;
 
   return (
     <div>
+      {blockClicksBehind && <BlockClicks />}
       {blurBack && <DialogOverlay />}
       <div
         className={`${className}  bg-white rounded-lg border-2 border-slate-100 p-10 flex flex-col justify-center gap-5 animate-fade-in`}

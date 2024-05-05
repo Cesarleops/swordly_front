@@ -2,6 +2,8 @@ import { links } from "../../utils/data";
 import { cookies } from "next/headers";
 import { CreateLink } from "../components/links/create-link";
 import { LinkButtons } from "../components/links/link-buttons";
+import { GroupLinks } from "../components/links/group-links";
+import { SortLinks } from "../components/links/sort-links";
 
 const getUser = async () => {
   const cookieStore = cookies();
@@ -48,51 +50,14 @@ export default async function Dashboard() {
             </svg>
             <p>3/20</p>
           </div>
-          <div className="border bg-[#ecf6ff] rounded-xl p-2 flex gap-3 transition-colors duration-500 hover:border-[#379afc]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="stroke-[#379afc]"
-            >
-              <path d="m3 16 4 4 4-4" />
-              <path d="M7 20V4" />
-              <path d="m21 8-4-4-4 4" />
-              <path d="M17 4v16" />
-            </svg>
-            <p className="text-[#379afc]">Sort</p>
-          </div>
-          <div className="border bg-[#f2ebfa] rounded-xl p-2 flex gap-3 transition-colors duration-500 hover:border-[#8f5cd4]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="stroke-[#8f5cd4]"
-            >
-              <path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z" />
-              <path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z" />
-              <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z" />
-              <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z" />
-            </svg>
-            <p className="text-[#8f5cd4]">Group</p>
-          </div>
+          <SortLinks />
+          <GroupLinks />
           <div className="ml-auto">
             <CreateLink />
           </div>
         </div>
       </header>
+
       <main className="px-10 pt-10">
         <section className="flex gap-8">
           {links.map((li) => (

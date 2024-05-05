@@ -15,7 +15,7 @@ export default function Login() {
             Log in with email and password or select your favorite prodiver!
           </p>
         </header>
-        <form className="flex flex-col gap-4 items-start w-full ">
+        <form className="flex flex-col gap-4 items-start w-full pl-0 md:pl-10">
           <fieldset className="w-full">
             <label htmlFor="email">Email</label>
             <div className="flex items-center p-2 border border-slate-200 rounded-xl max-w-xl">
