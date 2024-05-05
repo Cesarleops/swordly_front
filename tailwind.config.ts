@@ -11,6 +11,28 @@ const config: Config = {
       colors: {
         backgrounds: "#153448",
       },
+      animation: {
+        "fade-in": "fadeIn ease-in 0.2s ",
+        "fade-out": "fadeOut ease-out 0.2s ",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
+        },
+        fadeOut: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
+      },
     },
   },
   plugins: [],
