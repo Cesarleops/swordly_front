@@ -1,25 +1,21 @@
-import { links } from "../../utils/data";
-import { cookies } from "next/headers";
 import { CreateLink } from "../components/links/create-link";
 import { LinkButtons } from "../components/links/link-buttons";
 import { GroupLinks } from "../components/links/group-links";
 import { SortLinks } from "../components/links/sort-links";
+import { getUser, getLinks } from "@/utils/actions";
 
-const getUser = async () => {
-  const cookieStore = cookies();
-  const cookie = cookieStore.get("auth_session");
-  const res = await fetch(`http://localhost:3031/api/user`, {
-    headers: {
-      cookie: `${cookie?.name}=${cookie?.value}`,
-    },
-  });
-  const data = await res.json();
-
-  return data;
+type Link = {
+  id: number;
+  original: string;
+  short: string;
+  clicks: number;
 };
+
 export default async function Dashboard() {
   const user = await getUser();
+  const { links } = await getLinks(user.id);
   console.log("user", user);
+  console.log("links", links);
   return (
     <section>
       <header className="flex items-center justify-between px-10 mt-2 border-b-2 border-b-slate-100 pb-4">
@@ -59,20 +55,28 @@ export default async function Dashboard() {
       </header>
 
       <main className="px-10 pt-10">
-        <section className="flex gap-8">
-          {links.map((li) => (
-            <div
-              className="border border-slate-300 p-5 rounded-lg relative w-[25%]"
-              key={li.originalUrl}
-            >
-              <LinkButtons />
-              <p>/{li.shortUrl}</p>
-              <p className="text-slate-400">{li.originalUrl}</p>
-              <p className="absolute flex items-center right-2 bottom-1">
-                {li.clicks} clicks
-              </p>
-            </div>
-          ))}
+        <section className="flex gap-8 flex-wrap max-w-8xl">
+          {links.length > 0 &&
+            links.map((li: Link) => (
+              <div
+                className="flex flex-col border border-slate-300 p-5 rounded-lg relative w-[25%] animate-fade-in"
+                key={li.id}
+              >
+                <LinkButtons id={li.id} link={li} />
+                <a
+                  href={`http://localhost:3031/api/links/${li.short}`}
+                  target="_blank"
+                >
+                  /{li.short}
+                </a>
+                <a href={li.original} className="text-slate-400">
+                  {li.original}
+                </a>
+                <p className="absolute flex items-center right-2 bottom-1">
+                  {li.clicks} clicks
+                </p>
+              </div>
+            ))}
         </section>
       </main>
     </section>

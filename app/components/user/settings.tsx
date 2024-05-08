@@ -32,9 +32,10 @@ export function Settings() {
       </button>
       <Dialog
         open={open}
-        className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10"
+        className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
         setOpen={setOpen}
         blurBack={false}
+        blockClicksBehind={true}
       >
         <ul>
           <li>

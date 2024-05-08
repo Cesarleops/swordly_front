@@ -3,6 +3,7 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Settings } from "./components/user/settings";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           </Link>
           <Settings />
         </header>
+        <Toaster />
         {children}
       </body>
     </html>
