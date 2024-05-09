@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 
-export function CreateLink() {
+export function CreateLink({ links_amount }: any) {
   const [clicked, setClicked] = useState(false);
   const [input, setInput] = useState({
     original: "",
@@ -15,6 +15,10 @@ export function CreateLink() {
   const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (links_amount === 20) {
+      toast.error("Upps, you already reached your links limit.");
+      return;
+    }
     try {
       await fetch("http://localhost:3031/api/links", {
         method: "POST",
@@ -37,7 +41,8 @@ export function CreateLink() {
         className="border bg-black text-white rounded-xl font-semibold p-2 px-5"
         onClick={() => setClicked(true)}
       >
-        Create Link
+        <p className="hidden lg:block">Create Link</p>
+        <span className="block lg:hidden">+</span>
       </button>
       <Dialog
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]  p-10"

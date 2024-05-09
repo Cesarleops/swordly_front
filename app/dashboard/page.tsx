@@ -11,20 +11,24 @@ type Link = {
   clicks: number;
 };
 
-export default async function Dashboard() {
+export default async function Dashboard({
+  searchParams,
+}: {
+  searchParams: {
+    order: string;
+  };
+}) {
   const user = await getUser();
-  const { links } = await getLinks(user.id);
-  console.log("user", user);
-  console.log("links", links);
+  const { links } = await getLinks(searchParams);
   return (
     <section>
-      <header className="flex items-center justify-between px-10 mt-2 border-b-2 border-b-slate-100 pb-4">
-        <div className="flex items-center gap-10 w-screen">
-          <span className="font-bold">/Links/{user.username}</span>
+      <header className="flex  px-2 sm:px-10 mt-2 border-b-2 border-b-slate-100  items-center h-20">
+        <div className="flex items-center gap-3 lg:gap-10  justify-between w-screen">
+          <span className="font-bold hidden sm:block">/{user.username}</span>
           <input
             type="text"
             placeholder="Search a link!"
-            className="h-8 p-6 border border-slate-200 text-left font-normal rounded-xl"
+            className="h-8 p-6 border border-slate-200 text-left font-normal rounded-xl w-[150px] sm:w-auto"
           />
 
           <div className="border bg-[#edfee6] text-[#27cd0e] rounded-xl p-2 flex items-center gap-3">
@@ -38,28 +42,28 @@ export default async function Dashboard() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-bar-chart-2"
+              className="hidden sm:block"
             >
               <line x1="18" x2="18" y1="20" y2="10" />
               <line x1="12" x2="12" y1="20" y2="4" />
               <line x1="6" x2="6" y1="20" y2="14" />
             </svg>
-            <p>3/20</p>
+            <span>{user.links_amount}/20</span>
           </div>
           <SortLinks />
           <GroupLinks />
           <div className="ml-auto">
-            <CreateLink />
+            <CreateLink links_amount={user.links_amount} />
           </div>
         </div>
       </header>
 
       <main className="px-10 pt-10">
-        <section className="flex gap-8 flex-wrap max-w-8xl">
+        <section className="flex flex-col items-center sm:flex-row sm:flex-wrap sm:justify-start gap-8 ">
           {links.length > 0 &&
             links.map((li: Link) => (
               <div
-                className="flex flex-col border border-slate-300 p-5 rounded-lg relative w-[25%] animate-fade-in"
+                className="flex flex-col border border-slate-300 p-5 rounded-lg relative w-[100%]  md:w-[30%] animate-fade-in"
                 key={li.id}
               >
                 <LinkButtons id={li.id} link={li} />

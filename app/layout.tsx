@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+
 import "./globals.css";
 import Link from "next/link";
 import { Settings } from "./components/user/settings";
 import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const monserrat = Montserrat({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Swordly",
   description: "Generate and manage links easily.",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={monserrat.className}>
+      <body className={GeistMono.className}>
         <header className="w-full py-3 px-3 font-bold flex justify-start items-center pl-10">
           <Link
             href="/"

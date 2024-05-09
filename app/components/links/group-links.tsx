@@ -30,12 +30,12 @@ export const GroupLinks = () => {
           <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z" />
           <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z" />
         </svg>
-        <p className="text-[#8f5cd4]">Group</p>
+        <p className="text-[#8f5cd4] hidden lg:block">Group</p>
       </div>
       <Dialog
         open={open}
         setOpen={setOpen}
-        className="absolute bg-[#f2ebfa] z-50  top-14  w-[300px] px-5 py-10 shadow-sm"
+        className="absolute bg-[#f2ebfa] z-50  top-14 right-2 w-[200px]  sm:w-[300px] px-5 py-10 shadow-sm"
         blurBack={false}
         blockClicksBehind={true}
       >

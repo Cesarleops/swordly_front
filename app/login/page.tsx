@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Icons } from "../components/ui/icon";
+Icons;
 
 export default function Login() {
   return (
-    <section className="h-screen flex gap-10 justify-center px-10">
+    <section className="h-screen flex flex-col items-center sm:items-start sm:flex-row gap-10 sm:justify-center px-10">
       <div className="h-fit flex flex-col gap-6 mt-40 border-2 border-slate-200 p-10 rounded-xl">
         <header className="flex flex-col items-start gap-2">
           <div className="flex gap-4 items-center">
@@ -38,7 +39,7 @@ export default function Login() {
             className="p-2 border border-slate-200 rounded-md flex gap-2 items-center"
           >
             {Icons.github()}
-            <p className="font-semibold text-pretty max-w-xl">
+            <p className="font-semibold text-pretty max-w-xl hidden sm:block">
               Continue with Github
             </p>
           </Link>
@@ -47,7 +48,7 @@ export default function Login() {
             className="p-2  border border-slate-200 rounded-md flex gap-4 items-center"
           >
             {Icons.google()}
-            <p className="font-semibold text-pretty max-w-xl">
+            <p className="font-semibold text-pretty max-w-xl hidden sm:block">
               Continue with Google
             </p>
           </Link>
