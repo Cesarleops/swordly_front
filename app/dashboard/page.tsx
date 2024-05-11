@@ -2,7 +2,8 @@ import { CreateLink } from "../components/links/create-link";
 import { LinkButtons } from "../components/links/link-buttons";
 import { GroupLinks } from "../components/links/group-links";
 import { SortLinks } from "../components/links/sort-links";
-import { getUser, getLinks } from "@/utils/actions";
+import { getUser, getLinks, getGroups } from "@/utils/actions";
+import { SearchLink } from "../components/links/search-link";
 
 type Link = {
   id: number;
@@ -16,21 +17,19 @@ export default async function Dashboard({
 }: {
   searchParams: {
     order: string;
+    search: string;
   };
 }) {
   const user = await getUser();
   const { links } = await getLinks(searchParams);
+  const groups = await getGroups();
+  console.log(groups);
   return (
     <section>
       <header className="flex  px-2 sm:px-10 mt-2 border-b-2 border-b-slate-100  items-center h-20">
         <div className="flex items-center gap-3 lg:gap-10  justify-between w-screen">
           <span className="font-bold hidden sm:block">/{user.username}</span>
-          <input
-            type="text"
-            placeholder="Search a link!"
-            className="h-8 p-6 border border-slate-200 text-left font-normal rounded-xl w-[150px] sm:w-auto"
-          />
-
+          <SearchLink />
           <div className="border bg-[#edfee6] text-[#27cd0e] rounded-xl p-2 flex items-center gap-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -51,9 +50,9 @@ export default async function Dashboard({
             <span>{user.links_amount}/20</span>
           </div>
           <SortLinks />
-          <GroupLinks />
+          <GroupLinks links={links} groups={groups} />
           <div className="ml-auto">
-            <CreateLink links_amount={user.links_amount} />
+            <CreateLink />
           </div>
         </div>
       </header>
@@ -70,10 +69,11 @@ export default async function Dashboard({
                 <a
                   href={`http://localhost:3031/api/links/${li.short}`}
                   target="_blank"
+                  className="w-fit"
                 >
                   /{li.short}
                 </a>
-                <a href={li.original} className="text-slate-400">
+                <a href={li.original} className="text-slate-400 w-fit">
                   {li.original}
                 </a>
                 <p className="absolute flex items-center right-2 bottom-1">

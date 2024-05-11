@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 
-export function CreateLink({ links_amount }: any) {
+export function CreateLink() {
   const [clicked, setClicked] = useState(false);
   const [input, setInput] = useState({
     original: "",
@@ -15,12 +15,8 @@ export function CreateLink({ links_amount }: any) {
   const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (links_amount === 20) {
-      toast.error("Upps, you already reached your links limit.");
-      return;
-    }
     try {
-      await fetch("http://localhost:3031/api/links", {
+      const res = await fetch("http://localhost:3031/api/links", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +24,17 @@ export function CreateLink({ links_amount }: any) {
         credentials: "include",
         body: JSON.stringify(input),
       });
+      const data = await res.json();
+      if (data.ok === "false") {
+        toast.info(data.message);
+        return;
+      }
       toast.success("Your was link created");
+      setInput({
+        original: "",
+        short: "",
+        description: "",
+      });
 
       router.refresh();
     } catch (error) {
@@ -58,6 +64,7 @@ export function CreateLink({ links_amount }: any) {
             <input
               className="border-2 border-slate-200 rounded-lg p-2"
               type="text"
+              value={input.original}
               onChange={(e) => {
                 setInput((prev) => {
                   return {
@@ -73,6 +80,7 @@ export function CreateLink({ links_amount }: any) {
             <input
               type="text"
               className="border-2 border-slate-200 rounded-lg p-2"
+              value={input.short}
               onChange={(e) => {
                 setInput((prev) => {
                   return {
@@ -86,6 +94,7 @@ export function CreateLink({ links_amount }: any) {
           <label className="flex flex-col gap-2">
             Description
             <textarea
+              value={input.description}
               placeholder="Optional"
               className="border-2 border-slate-200 rounded-lg p-2"
             ></textarea>

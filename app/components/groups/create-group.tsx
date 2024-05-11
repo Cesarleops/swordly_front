@@ -1,25 +1,15 @@
 "use client";
+
 import { FormEvent, useState } from "react";
 import { Dialog } from "../ui/dialog";
-import Link from "next/link";
 
-export const GroupLinks = ({
-  links,
-  groups,
-}: {
-  links: { short: string; id: number }[];
-  groups: { name: string; id: number }[];
-}) => {
+export const CreateGroup = () => {
   const [open, setOpen] = useState(false);
-  const [openGroup, setOpenGroup] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
-  console.log("grupos", groups);
   const handleSubmit = (e: FormEvent) => {
-    console.log("select", selectedLinks);
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("json", formJson);
     e.preventDefault();
     fetch("http://localhost:3031/api/groups", {
       method: "POST",
@@ -34,68 +24,15 @@ export const GroupLinks = ({
   };
 
   return (
-    <div className="relative ">
-      <div
-        className="border bg-[#f2ebfa] rounded-xl p-2 flex gap-3 transition-colors duration-500 hover:border-[#8f5cd4]"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="stroke-[#8f5cd4]"
-        >
-          <path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z" />
-          <path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z" />
-          <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z" />
-          <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z" />
-        </svg>
-        <p className="text-[#8f5cd4] hidden lg:block">Group</p>
-      </div>
-      <Dialog
-        open={open}
-        setOpen={setOpen}
-        className="absolute bg-[#f2ebfa] z-50  top-14 right-2 w-[200px]  sm:w-[300px] px-5 py-10 shadow-sm"
-        blurBack={false}
-        blockClicksBehind={true}
-      >
-        <p className="text-[#8f5cd4] text-2xl font-bold">Groups</p>
-        <p className="text-gray-400 text-pretty">
-          Group your links by project, business and more.
-        </p>
-        <ul className="flex flex-col gap-4">
-          <li>
-            <button
-              onClick={() => setOpenGroup(true)}
-              className="bg-[#f2ebfa] p-2 rounded-xl text-purple-600"
-            >
-              Create Group
-            </button>
-          </li>
-          <li>
-            <Link
-              className="bg-[#f2ebfa] p-2 rounded-xl text-purple-600"
-              href="/dashboard/groups"
-            >
-              View Groups
-            </Link>
-          </li>
-        </ul>
-      </Dialog>
+    <>
+      <button onClick={() => setOpen(true)}>Create group</button>
+
       <Dialog
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] "
         blurBack={true}
         blockClicksBehind={true}
-        open={openGroup}
-        setOpen={setOpenGroup}
+        open={open}
+        setOpen={setOpen}
       >
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
           <label htmlFor="name">Group name</label>
@@ -114,7 +51,7 @@ export const GroupLinks = ({
           <div className="flex flex-col gap-4">
             <p className=" p-2 w-fit ">Add links</p>
             <ul className="flex flex-wrap gap-4">
-              {links.map((li) => (
+              {/* {links.map((li) => (
                 <li
                   className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${
                     selectedLinks.map((li) => li.short).includes(li.short)
@@ -134,12 +71,12 @@ export const GroupLinks = ({
                 >
                   /{li.short}
                 </li>
-              ))}
+              ))} */}
             </ul>
           </div>
           <button>ENVIAR</button>
         </form>
       </Dialog>
-    </div>
+    </>
   );
 };
