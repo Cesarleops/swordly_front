@@ -1,4 +1,5 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const getUser = async () => {
   const cookieStore = cookies();
@@ -10,7 +11,9 @@ export const getUser = async () => {
     },
   });
   const data = await res.json();
-
+  if (data.user === "Invalid User") {
+    redirect("http://localhost:3000/login");
+  }
   return data;
 };
 

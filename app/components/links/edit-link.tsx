@@ -1,26 +1,29 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
+import { checkIfShortLinkExists, updateLink } from "@/utils/services";
 
 export const EditLink = ({ id, link }: { id: number; link: any }) => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [errors, setErrors] = useState<{ message: string; errors: any[] }>({
+    message: "",
+    errors: [],
+  });
   const router = useRouter();
 
   const handleEdit = async (e: FormEvent) => {
     e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form as HTMLFormElement);
+    const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("json", formJson);
-    const updatedLink = await fetch("http://localhost:3031/api/links", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "PUT",
-      body: JSON.stringify({ id, ...formJson }),
-    });
-    console.log(updatedLink);
+    const linkExists = await checkIfShortLinkExists(formJson.short as string);
+    if (linkExists.message === "founded") {
+      setErrors({
+        message: "Failed create link",
+        errors: ["link already exists"],
+      });
+      return;
+    }
+    await updateLink(id, formJson);
     router.refresh();
   };
 
@@ -49,15 +52,16 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
         blockClicksBehind={false}
       >
-        <form onSubmit={handleEdit}>
-          <label htmlFor="original" className="flex flex-col gap-2">
-            Long Link
-          </label>
+        <p className="text-left text-gray-500 text-2xl">
+          Editing <span className="text-green-400">/{link.short}</span>
+        </p>
+        <form onSubmit={handleEdit} className="flex flex-col items-start gap-4">
+          <label className="flex flex-col gap-2">Long Link</label>
           <input
-            className="border-2 border-slate-200 rounded-lg "
+            className="border-2 border-slate-200 rounded-lg p-2"
             type="text"
-            name="original"
             id="original"
+            name="original"
             defaultValue={link.original}
           />
           <label htmlFor="short" className="flex flex-col gap-2">
@@ -65,7 +69,7 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
           </label>
           <input
             type="text"
-            className="border-2 border-slate-200 rounded-lg"
+            className="border-2 border-slate-200 rounded-lg p-2"
             name="short"
             defaultValue={link.short}
             id="short"
@@ -74,13 +78,16 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
             description
           </label>
           <textarea
-            className="border-2 border-slate-200 rounded-lg"
+            className="border-2 border-slate-200 rounded-lg p-2"
             name="description"
             defaultValue={link.description}
             id="description"
           ></textarea>
-          <button type="submit" className="bg-blue-500 p-5 rounded-lg">
-            Send
+          <button
+            type="submit"
+            className="bg-black text-white p-4 w-1/2 rounded-lg self-center "
+          >
+            Save changes
           </button>
         </form>
       </Dialog>

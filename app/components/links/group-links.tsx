@@ -13,14 +13,11 @@ export const GroupLinks = ({
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
-  console.log("grupos", groups);
   const handleSubmit = (e: FormEvent) => {
-    console.log("select", selectedLinks);
+    e.preventDefault();
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("json", formJson);
-    e.preventDefault();
     fetch("http://localhost:3031/api/groups", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -97,6 +94,7 @@ export const GroupLinks = ({
         open={openGroup}
         setOpen={setOpenGroup}
       >
+        <p className="text-2xl text-gray-500">Create a new group</p>
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
           <label htmlFor="name">Group name</label>
           <input
@@ -112,8 +110,10 @@ export const GroupLinks = ({
             className="border-2 border-slate-200 rounded-lg p-2"
           />
           <div className="flex flex-col gap-4">
-            <p className=" p-2 w-fit ">Add links</p>
-            <ul className="flex flex-wrap gap-4">
+            <p className=" p-2 w-fit ">
+              Select the links you want to add to this group
+            </p>
+            <ul className="flex flex-wrap gap-4 max-w-xl">
               {links.map((li) => (
                 <li
                   className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${
@@ -122,7 +122,9 @@ export const GroupLinks = ({
                       : ""
                   }`}
                   onClick={() => {
-                    if (selectedLinks.includes(li.short)) {
+                    if (
+                      selectedLinks.map((li) => li.short).includes(li.short)
+                    ) {
                       setSelectedLinks(
                         selectedLinks.filter((l) => l !== li.short)
                       );
@@ -137,7 +139,9 @@ export const GroupLinks = ({
               ))}
             </ul>
           </div>
-          <button>ENVIAR</button>
+          <button className="bg-black text-white p-4 rounded-lg w-1/2 self-center mt-4">
+            Create
+          </button>
         </form>
       </Dialog>
     </div>

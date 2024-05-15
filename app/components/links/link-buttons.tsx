@@ -40,14 +40,14 @@ export const LinkButtons = ({ id, link }: { id: number; link: any }) => {
         blockClicksBehind={true}
       >
         <p className="text-left self-start font-bold">/{link.short}</p>
-        <button className="flex gap-4 items-center justify-start  bg-slate-100 p-4 pr-7 rounded-lg">
+        <span className="flex gap-4 items-center justify-start  bg-slate-100 p-4 pr-7 rounded-lg">
           Edit
           <EditLink id={id} link={link} />
-        </button>
-        <button className="flex items-center gap-4 bg-red-100 p-3 rounded-lg text-red-500">
+        </span>
+        <span className="flex items-center gap-4 bg-red-100 p-3 rounded-lg text-red-500">
           Delete
           <DeleteLink id={id} />
-        </button>
+        </span>
       </Dialog>
     </>
   );

@@ -18,6 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="icon" href="../favicon.ico "></link>
       <body className={GeistMono.className}>
         <header className="w-full py-3 px-3 font-bold flex justify-start items-center pl-10">
           <Link
