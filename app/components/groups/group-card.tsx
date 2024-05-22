@@ -1,8 +1,5 @@
-import { getSingleGroup } from "@/utils/actions";
-import link from "next/link";
-import { DeleteLink } from "../links/delete-link";
-import { EditLink } from "../links/edit-link";
-import { Dialog } from "../ui/dialog";
+import { getLinks, getSingleGroup } from "@/utils/actions";
+
 import { GroupOptions } from "./group-options";
 
 export const GroupCard = async ({
@@ -10,23 +7,35 @@ export const GroupCard = async ({
   name,
   created_at,
   description,
+  params,
 }: {
   id: string;
   name: string;
   created_at: string;
   description: string;
+  params: string;
 }) => {
   console.log(id, name, created_at);
   const group = await getSingleGroup(id);
-  console.log("sss", group);
-  console.log(created_at.slice(0, 10));
-  const date = created_at.slice(0, 10);
+  const { links } = await getLinks(params);
 
+  const date = created_at.slice(0, 10);
+  const linkIds = new Set(group.group_links.map((li) => li.id));
+  console.log("aho", linkIds);
+  console.log("l", links);
+  const availableLinks = links.filter((li) => !linkIds.has(li.id));
+
+  console.log("av", availableLinks);
   return (
     <div className="relative flex flex-col gap-3 px-6 py-6  border-2 border-slate-200 w-[100%] sm:w-[35%] rounded-lg">
       <header className="flex gap-3 items-center">
         <p className="text-2xl font-bold mr-auto">{name}</p>
-        <GroupOptions id={id} description={description} name={name} />
+        <GroupOptions
+          id={id}
+          description={description}
+          name={name}
+          available_links={availableLinks}
+        />
       </header>
       <p>{description}</p>
 

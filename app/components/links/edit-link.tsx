@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 import { checkIfShortLinkExists, updateLink } from "@/utils/services";
+import { LinkSchema } from "@/utils/schemas";
 
 export const EditLink = ({ id, link }: { id: number; link: any }) => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -15,6 +16,10 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
+    console.log("f", formJson);
+    const validateEditedLink = LinkSchema.safeParse(formJson);
+    console.log("de", validateEditedLink);
+
     const linkExists = await checkIfShortLinkExists(formJson.short as string);
     if (linkExists.message === "founded") {
       setErrors({

@@ -34,11 +34,3 @@ export async function deleteLink(id: string) {
   });
   console.log(del);
 }
-
-export async function checkIfShortLinkExists(short: string) {
-  const resp = await fetch(`http://localhost:3031/api/links/exists/${short}`, {
-    credentials: "include",
-  });
-  const shortLinkExists = await resp.json();
-  return shortLinkExists;
-}

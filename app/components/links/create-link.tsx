@@ -4,14 +4,13 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
-import { checkIfShortLinkExists } from "@/utils/services";
+import { createNewLink } from "@/utils/services";
+import { LinkSchema } from "@/utils/schemas";
+import { InputError } from "../ui/error";
 
 export function CreateLink() {
   const [clicked, setClicked] = useState(false);
-  const [errors, setErrors] = useState<{ message: string; errors: any[] }>({
-    message: "",
-    errors: [],
-  });
+  const [errors, setErrors] = useState<any>(false);
   const [input, setInput] = useState({
     original: "",
     short: "",
@@ -31,26 +30,24 @@ export function CreateLink() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validateNewLink = LinkSchema.safeParse(input);
+
+    if (!validateNewLink.success) {
+      toast.error("Something went wrong creating your link");
+      setErrors(validateNewLink.error?.format());
+      return;
+    }
+
+    if (input.original === input.short) {
+      toast.error("Can't use the same link in the shortened version");
+      return;
+    }
+
     try {
-      const linkExists = await checkIfShortLinkExists(input.short);
-      if (linkExists.message === "founded") {
-        setErrors({
-          message: "Failed create link",
-          errors: ["link already exists"],
-        });
-        return;
-      }
-      const res = await fetch("http://localhost:3031/api/links", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(input),
-      });
-      const data = await res.json();
-      if (data.ok === "false") {
-        toast.info(data.message);
+      const newLink = await createNewLink(input);
+      console.log("resultado de crear", newLink);
+      if (newLink.message === "The short link already exists") {
+        toast.info(newLink.message);
         return;
       }
       toast.success("Your was link created");
@@ -82,10 +79,7 @@ export function CreateLink() {
         blockClicksBehind={true}
       >
         <p className="text-gray-500 text-2xl">Create a new link</p>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-4"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col  gap-4">
           <label className="flex flex-col gap-2">
             Long Link
             <input
@@ -95,8 +89,14 @@ export function CreateLink() {
               required
               onChange={handleChange}
               name="original"
+              aria-describedby="original"
             />
           </label>
+          {errors.original?._errors.length > 0 ? (
+            <InputError id="original" errors={errors.original._errors} />
+          ) : (
+            ""
+          )}
           <label className="flex flex-col gap-2">
             Short Link
             <input
@@ -106,13 +106,14 @@ export function CreateLink() {
               required
               onChange={handleChange}
               name="short"
+              aria-describedby="short"
             />
-            {errors.errors.length > 0 ? (
-              <p className="text-red-500">{errors.errors[0]}</p>
-            ) : (
-              ""
-            )}
           </label>
+          {errors.short?._errors.length > 0 ? (
+            <InputError id="short" errors={errors.short._errors} />
+          ) : (
+            ""
+          )}
           <label className="flex flex-col gap-2">
             Description
             <textarea

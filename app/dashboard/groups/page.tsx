@@ -2,7 +2,7 @@ import { GroupCard } from "@/app/components/groups/group-card";
 import { getGroups } from "@/utils/actions";
 import Link from "next/link";
 
-export default async function Groups(params: any) {
+export default async function Groups({ params }: any) {
   const groups = await getGroups();
   console.log("gg", groups);
 
@@ -47,6 +47,7 @@ export default async function Groups(params: any) {
               id={g.id}
               created_at={g.created_at}
               description={g.description}
+              params={params}
             />
           )
         )}

@@ -2,8 +2,9 @@ import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 
-export const EditGroup = ({ id, name, description }: any) => {
+export const EditGroup = ({ id, name, description, available_links }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
   const router = useRouter();
 
   const handleEdit = async (e: FormEvent) => {
@@ -75,6 +76,43 @@ export const EditGroup = ({ id, name, description }: any) => {
             Send
           </button>
         </form>
+        <div>
+          <p>Add more links</p>
+          {available_links.map((li: any) => (
+            <div
+              className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${
+                selectedLinks.map((li) => li.short).includes(li.short)
+                  ? "bg-green-200"
+                  : ""
+              }`}
+              onClick={() => {
+                if (selectedLinks.map((li) => li.short).includes(li.short)) {
+                  setSelectedLinks(selectedLinks.filter((l) => l !== li.short));
+                  return;
+                }
+                setSelectedLinks((prev) => [...prev, li]);
+              }}
+              key={li.id}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="stroke-purple-500"
+              >
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+              <p className="text-gray-500">/{li.short}</p>
+            </div>
+          ))}
+        </div>
       </Dialog>
     </>
   );

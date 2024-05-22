@@ -5,7 +5,12 @@ import { useState } from "react";
 import { EditGroup } from "./edit-group";
 import { DeleteGroup } from "./delete-group";
 
-export const GroupOptions = ({ name, description, id }: any) => {
+export const GroupOptions = ({
+  name,
+  description,
+  id,
+  available_links,
+}: any) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
@@ -33,7 +38,12 @@ export const GroupOptions = ({ name, description, id }: any) => {
       >
         <ul className="flex flex-col gap-3 mt-2">
           <li>
-            <EditGroup id={id} name={name} description={description} />
+            <EditGroup
+              id={id}
+              name={name}
+              description={description}
+              available_links={available_links}
+            />
           </li>
           <li>
             <DeleteGroup id={id} />

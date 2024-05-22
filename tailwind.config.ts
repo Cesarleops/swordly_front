@@ -12,11 +12,6 @@ const config: Config = {
       colors: {
         backgrounds: "#153448",
       },
-      animation: {
-        "fade-in": "fadeIn ease-in 0.2s ",
-        "fade-out": "fadeOut ease-out 0.2s ",
-        slider: "slider 20s linear infinite",
-      },
       keyframes: {
         fadeIn: {
           "0%": {

@@ -1,6 +1,6 @@
 import { CreateLink } from "../components/links/create-link";
 import { LinkButtons } from "../components/links/link-buttons";
-import { GroupLinks } from "../components/links/group-links";
+import { CreateGroup } from "../components/groups/create-group";
 import { SortLinks } from "../components/links/sort-links";
 import { getUser, getLinks, getGroups } from "@/utils/actions";
 import { SearchLink } from "../components/links/search-link";
@@ -50,7 +50,7 @@ export default async function Dashboard({
             <span>{user.links_amount}/20</span>
           </div>
           <SortLinks />
-          <GroupLinks links={links} groups={groups} />
+          <CreateGroup links={links} groups={groups} />
           <div className="ml-auto">
             <CreateLink />
           </div>
