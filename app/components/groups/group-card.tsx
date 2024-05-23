@@ -40,6 +40,9 @@ export const GroupCard = async ({
 
       <div>
         <p className="text-green-400 text-lg font-semibold">Associated links</p>
+        {group.group_links.length === 0 && (
+          <p>This group doesn&apos;t have links.</p>
+        )}
         <ul className="flex gap-4">
           {group.group_links.map((li: any) => (
             <li key={li.id} className="flex gap-2 items-center text-lg">

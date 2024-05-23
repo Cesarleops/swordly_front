@@ -80,6 +80,9 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
           <div>
             <p className="font-bold">Add more links</p>
             <div className="flex gap-2 flex-wrap">
+              {available_links.length === 0 && (
+                <p className="text-slate-400">There are not available links.</p>
+              )}
               {available_links.map((li: any) => (
                 <div
                   className={`flex gap-2 border-2 border-slate-200 w-fit p-2 rounded-lg ${

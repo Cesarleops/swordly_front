@@ -32,6 +32,7 @@ export default async function Groups({ params }: any) {
       </p>
 
       <div className="flex p-10 gap-4 flex-wrap">
+        {groups.length === 0 && <p>You haven&apos;t created any group. </p>}
         {groups.map(
           (g: {
             id: string;

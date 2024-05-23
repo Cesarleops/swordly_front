@@ -79,7 +79,12 @@ export const GenerateQR = ({ short }: { short: string }) => {
         <div className="h-[200px] w-[200px] p-5 flex flex-col gap-4 items-center">
           <img src={qr} alt="qr-code" />
         </div>
-        <button onClick={downloadQR}>Download</button>
+        <button
+          onClick={downloadQR}
+          className="bg-black text-white p-2 rounded-md"
+        >
+          Download
+        </button>
       </Dialog>
     </>
   );

@@ -34,9 +34,15 @@ export const CreateGroup = ({
     toast(
       <div className="flex flex-col gap-2">
         <p>Your group was succesfully created</p>
-        <Link href={"/dashboard/groups"} className="text-green-500">
+        <button
+          onClick={() => {
+            router.replace("/dashboard/groups");
+            router.refresh();
+          }}
+          className="text-green-500 p-0 self-start"
+        >
           Click here to view group
-        </Link>
+        </button>
       </div>
     );
 
@@ -144,6 +150,11 @@ export const CreateGroup = ({
               Select the links you want to add to this group
             </p>
             <ul className="flex flex-wrap gap-4 max-w-xl">
+              {links.length === 0 && (
+                <p className="text-slate-400">
+                  You haven&apos;t created links yet.
+                </p>
+              )}
               {links.map((li) => (
                 <li
                   className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${

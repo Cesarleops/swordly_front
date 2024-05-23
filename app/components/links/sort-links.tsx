@@ -67,7 +67,7 @@ export const SortLinks = () => {
                 router.refresh();
               }}
               className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
-                typeOfSort === "Ascendent" ? "bg-[#379afc] text-white" : ""
+                typeOfSort === "Ascendent" ? "bg-blue-500 text-white" : ""
               }`}
             >
               Name A-Z
@@ -91,7 +91,7 @@ export const SortLinks = () => {
                 router.refresh();
               }}
               className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
-                typeOfSort === "Descendent" ? "bg-[#379afc] text-white" : ""
+                typeOfSort === "Descendent" ? "bg-blue-500 text-white" : ""
               }`}
             >
               Name Z-A
