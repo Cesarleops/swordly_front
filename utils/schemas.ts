@@ -12,7 +12,8 @@ export const LinkSchema = z.object({
       message: "Field can't be empty",
     })
     .regex(checkValidUrl, {
-      message: "Please provide a valid url. ",
+      message:
+        "Please provide a valid url. \n use the prefix http:// or https://",
     }),
   short: z
     .string()

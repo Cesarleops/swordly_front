@@ -56,6 +56,7 @@ export function CreateLink() {
         short: "",
         description: "",
       });
+      setErrors(false);
 
       router.refresh();
     } catch (error) {

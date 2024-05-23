@@ -5,6 +5,7 @@ import Link from "next/link";
 import { GroupSchema } from "@/utils/schemas";
 import { toast } from "sonner";
 import { InputError } from "../ui/error";
+import { useRouter } from "next/navigation";
 
 export const CreateGroup = ({
   links,
@@ -17,7 +18,8 @@ export const CreateGroup = ({
   const [openGroup, setOpenGroup] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
   const [errors, setErrors] = useState<any>(false);
-  const handleSubmit = (e: FormEvent) => {
+  const router = useRouter();
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
@@ -29,7 +31,16 @@ export const CreateGroup = ({
       setErrors(validateNewGroup.error?.format());
       return;
     }
-    fetch("http://localhost:3031/api/groups", {
+    toast(
+      <div className="flex flex-col gap-2">
+        <p>Your group was succesfully created</p>
+        <Link href={"/dashboard/groups"} className="text-green-500">
+          Click here to view group
+        </Link>
+      </div>
+    );
+
+    await fetch("http://localhost:3031/api/groups", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -89,12 +100,15 @@ export const CreateGroup = ({
             </button>
           </li>
           <li>
-            <Link
+            <button
               className="bg-[#f2ebfa] p-2 rounded-xl text-purple-600"
-              href="/dashboard/groups"
+              onClick={() => {
+                router.replace("/dashboard/groups");
+                router.refresh();
+              }}
             >
               View Groups
-            </Link>
+            </button>
           </li>
         </ul>
       </Dialog>
@@ -134,7 +148,7 @@ export const CreateGroup = ({
                 <li
                   className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${
                     selectedLinks.map((li) => li.short).includes(li.short)
-                      ? "bg-green-200"
+                      ? "bg-black text-white"
                       : ""
                   }`}
                   onClick={() => {

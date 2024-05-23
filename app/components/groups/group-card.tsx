@@ -13,21 +13,20 @@ export const GroupCard = async ({
   name: string;
   created_at: string;
   description: string;
-  params: string;
+  params: { order: string; search: string };
 }) => {
-  console.log(id, name, created_at);
   const group = await getSingleGroup(id);
   const { links } = await getLinks(params);
 
   const date = created_at.slice(0, 10);
-  const linkIds = new Set(group.group_links.map((li) => li.id));
-  console.log("aho", linkIds);
-  console.log("l", links);
-  const availableLinks = links.filter((li) => !linkIds.has(li.id));
-
-  console.log("av", availableLinks);
+  const linkIds = new Set(
+    group.group_links.map((li: { link_id: string }) => li.link_id)
+  );
+  const availableLinks = links.filter(
+    (li: { id: string }) => !linkIds.has(li.id)
+  );
   return (
-    <div className="relative flex flex-col gap-3 px-6 py-6  border-2 border-slate-200 w-[100%] sm:w-[35%] rounded-lg">
+    <div className="relative flex flex-col  px-6 py-6  border-2 border-slate-200 w-[100%] sm:w-[35%] rounded-lg">
       <header className="flex gap-3 items-center">
         <p className="text-2xl font-bold mr-auto">{name}</p>
         <GroupOptions
@@ -37,7 +36,7 @@ export const GroupCard = async ({
           available_links={availableLinks}
         />
       </header>
-      <p>{description}</p>
+      <p className="font-semibold text-lg">{description}</p>
 
       <div>
         <p className="text-green-400 text-lg font-semibold">Associated links</p>

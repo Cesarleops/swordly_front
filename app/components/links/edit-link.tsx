@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
-import { checkIfShortLinkExists, updateLink } from "@/utils/services";
+import { updateLink } from "@/utils/services";
 import { LinkSchema } from "@/utils/schemas";
 
 export const EditLink = ({ id, link }: { id: number; link: any }) => {
@@ -20,14 +20,6 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
     const validateEditedLink = LinkSchema.safeParse(formJson);
     console.log("de", validateEditedLink);
 
-    const linkExists = await checkIfShortLinkExists(formJson.short as string);
-    if (linkExists.message === "founded") {
-      setErrors({
-        message: "Failed create link",
-        errors: ["link already exists"],
-      });
-      return;
-    }
     await updateLink(id, formJson);
     router.refresh();
   };

@@ -5,12 +5,12 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 export const SortLinks = () => {
   const [open, setOpen] = useState(false);
-
+  const [typeOfSort, setTypeOfSort] = useState("");
   const params = useSearchParams();
   const path = usePathname();
   const router = useRouter();
   return (
-    <div className="relative">
+    <div className={`relative`}>
       <div
         className="border bg-[#ecf6ff] rounded-xl p-2 flex gap-3 transition-colors duration-500 hover:border-[#379afc]"
         onClick={() => setOpen(true)}
@@ -34,6 +34,7 @@ export const SortLinks = () => {
         </svg>
         <p className="text-[#379afc] hidden lg:block">Sort</p>
       </div>
+
       <Dialog
         open={open}
         setOpen={setOpen}
@@ -51,7 +52,10 @@ export const SortLinks = () => {
               onClick={() => {
                 const p = new URLSearchParams(params);
                 console.log(p.get("order"));
+                setTypeOfSort("Ascendent");
                 if (p.get("order") === "name_asc") {
+                  setTypeOfSort("");
+
                   p.delete("order");
                   router.replace(`${path}`);
                   router.refresh();
@@ -62,7 +66,9 @@ export const SortLinks = () => {
                 router.replace(`${path}?${p.toString()}`);
                 router.refresh();
               }}
-              className="bg-[#ecf6ff] p-2 rounded-xl text-[#379afc]"
+              className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
+                typeOfSort === "Ascendent" ? "bg-[#379afc] text-white" : ""
+              }`}
             >
               Name A-Z
             </button>
@@ -71,8 +77,10 @@ export const SortLinks = () => {
             <button
               onClick={() => {
                 const p = new URLSearchParams(params);
-
+                setTypeOfSort("Descendent");
                 if (p.get("order") === "name_desc") {
+                  setTypeOfSort("");
+
                   p.delete("order");
                   router.replace(`${path}`);
                   router.refresh();
@@ -82,7 +90,9 @@ export const SortLinks = () => {
                 router.replace(`${path}?${p.toString()}`);
                 router.refresh();
               }}
-              className="bg-[#ecf6ff] p-2 rounded-xl text-[#379afc]"
+              className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
+                typeOfSort === "Descendent" ? "bg-[#379afc] text-white" : ""
+              }`}
             >
               Name Z-A
             </button>
