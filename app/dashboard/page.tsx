@@ -2,7 +2,7 @@ import { CreateLink } from "../components/links/create-link";
 import { LinkButtons } from "../components/links/link-buttons";
 import { CreateGroup } from "../components/groups/create-group";
 import { SortLinks } from "../components/links/sort-links";
-import { getUser, getLinks, getGroups } from "@/utils/actions";
+import { getUser, getLinks } from "@/utils/actions";
 import { SearchLink } from "../components/links/search-link";
 
 type Link = {
@@ -22,7 +22,6 @@ export default async function Dashboard({
 }) {
   const user = await getUser();
   const { links } = await getLinks(searchParams);
-  const groups = await getGroups();
   return (
     <section>
       <header className="flex  px-2 sm:px-10 mt-2 border-b-2 border-b-slate-100  items-center h-20">
@@ -49,7 +48,7 @@ export default async function Dashboard({
             <span>{user.links_amount}/20</span>
           </div>
           <SortLinks />
-          <CreateGroup links={links} groups={groups} />
+          <CreateGroup links={links} />
           <div className="ml-auto">
             <CreateLink />
           </div>

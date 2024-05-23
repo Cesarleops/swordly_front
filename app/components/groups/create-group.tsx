@@ -9,10 +9,8 @@ import { useRouter } from "next/navigation";
 
 export const CreateGroup = ({
   links,
-  groups,
 }: {
   links: { short: string; id: number }[];
-  groups: { name: string; id: number }[];
 }) => {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState(false);

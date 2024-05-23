@@ -14,7 +14,7 @@ export function Settings() {
   }
   console.log(open);
   return (
-    <div className="relative">
+    <div className="absolute top-4 right-4">
       <button onClick={() => setOpen(true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

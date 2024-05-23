@@ -20,7 +20,7 @@ export const createNewGroup = async (formJson: any, selectedLinks: any) => {
 export const getUser = async () => {
   const cookieStore = cookies();
   const cookie = cookieStore.get("auth_session");
-
+  console.log("pido al usuario");
   try {
     const res = await fetch(`http://localhost:3031/api/user`, {
       headers: {
@@ -40,6 +40,7 @@ export const getUser = async () => {
 export const getLinks = async (url: { order: string; search: string }) => {
   const cookieStore = cookies();
   const cookie = cookieStore.get("auth_session");
+  console.log("im calling this function");
   if (url.search) {
     try {
       const res = await fetch(

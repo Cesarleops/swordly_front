@@ -51,20 +51,15 @@ export const SortLinks = () => {
             <button
               onClick={() => {
                 const p = new URLSearchParams(params);
-                console.log(p.get("order"));
                 setTypeOfSort("Ascendent");
                 if (p.get("order") === "name_asc") {
                   setTypeOfSort("");
-
                   p.delete("order");
-                  router.replace(`${path}`);
-                  router.refresh();
-
+                  router.replace(`${path}?${p.toString()}`);
                   return;
                 }
                 p.set("order", "name_asc");
                 router.replace(`${path}?${p.toString()}`);
-                router.refresh();
               }}
               className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
                 typeOfSort === "Ascendent" ? "bg-blue-500 text-white" : ""
@@ -80,15 +75,12 @@ export const SortLinks = () => {
                 setTypeOfSort("Descendent");
                 if (p.get("order") === "name_desc") {
                   setTypeOfSort("");
-
                   p.delete("order");
-                  router.replace(`${path}`);
-                  router.refresh();
+                  router.replace(`${path}?${p.toString()}`);
                   return;
                 }
                 p.set("order", "name_desc");
                 router.replace(`${path}?${p.toString()}`);
-                router.refresh();
               }}
               className={`bg-[#ecf6ff] p-2 rounded-xl text-[#379afc] ${
                 typeOfSort === "Descendent" ? "bg-blue-500 text-white" : ""
