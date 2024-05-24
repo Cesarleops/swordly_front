@@ -6,6 +6,7 @@ import { GroupSchema } from "@/utils/schemas";
 import { toast } from "sonner";
 import { InputError } from "../ui/error";
 import { useRouter } from "next/navigation";
+import { DropdownMenu } from "../ui/dropdown-menu";
 
 export const CreateGroup = ({
   links,
@@ -83,7 +84,38 @@ export const CreateGroup = ({
         </svg>
         <p className="text-[#8f5cd4] hidden lg:block">Group</p>
       </div>
-      <Dialog
+      <DropdownMenu
+        open={open}
+        setOpen={setOpen}
+        className="absolute bg-[#f2ebfa] z-50  top-14 right-2 w-[200px]  sm:w-[300px] px-5 py-10 shadow-sm"
+      >
+        <p className="text-[#8f5cd4] text-2xl font-bold">Groups</p>
+        <p className="text-gray-400 text-pretty">
+          Group your links by project, business and more.
+        </p>
+        <ul className="flex flex-col gap-4">
+          <li>
+            <button
+              onClick={() => setOpenGroup(true)}
+              className="bg-[#f2ebfa] p-2 rounded-xl text-purple-600"
+            >
+              Create Group
+            </button>
+          </li>
+          <li>
+            <button
+              className="bg-[#f2ebfa] p-2 rounded-xl text-purple-600"
+              onClick={() => {
+                router.replace("/dashboard/groups");
+                router.refresh();
+              }}
+            >
+              View Groups
+            </button>
+          </li>
+        </ul>
+      </DropdownMenu>
+      {/* <Dialog
         open={open}
         setOpen={setOpen}
         className="absolute bg-[#f2ebfa] z-50  top-14 right-2 w-[200px]  sm:w-[300px] px-5 py-10 shadow-sm"
@@ -115,7 +147,7 @@ export const CreateGroup = ({
             </button>
           </li>
         </ul>
-      </Dialog>
+      </Dialog> */}
       <Dialog
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] "
         blurBack={true}
