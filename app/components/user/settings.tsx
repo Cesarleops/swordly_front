@@ -15,7 +15,7 @@ export function Settings() {
   }
   console.log(open);
   return (
-    <div className="absolute top-4 right-4">
+    <div className="relative">
       <button onClick={() => setOpen(true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +31,7 @@ export function Settings() {
           <circle cx="12" cy="12" r="3" />
         </svg>
       </button>
+
       <DropdownMenu
         open={open}
         className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
@@ -56,7 +57,9 @@ export function Settings() {
             </Link>
           </li>
         </ul>
+
       </DropdownMenu>
+
       {/* <Dialog
         open={open}
         className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
