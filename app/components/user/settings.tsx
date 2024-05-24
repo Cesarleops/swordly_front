@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { Icons } from "../ui/icon";
-import { TestDialog } from "../ui/test-dialog";
+import { DropdownMenu } from "../ui/dropdown-menu";
 
 export function Settings() {
   const pathname = usePathname();
@@ -31,7 +31,12 @@ export function Settings() {
           <circle cx="12" cy="12" r="3" />
         </svg>
       </button>
-      <TestDialog open={open} setOpen={setOpen}>
+
+      <DropdownMenu
+        open={open}
+        className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
+        setOpen={setOpen}
+      >
         <ul>
           <li>
             <Link
@@ -52,7 +57,9 @@ export function Settings() {
             </Link>
           </li>
         </ul>
-      </TestDialog>
+
+      </DropdownMenu>
+
       {/* <Dialog
         open={open}
         className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
