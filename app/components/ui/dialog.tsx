@@ -33,7 +33,15 @@ export const Dialog = ({
     <div>
       {blockClicksBehind && <BlockClicks />}
       {blurBack && <DialogOverlay />}
-      <div
+      <dialog
+        open={open}
+        onClick={(e) => {
+          console.log(e.target);
+          console.log(e.currentTarget);
+          if (e.currentTarget === e.target) {
+            setOpen(false);
+          }
+        }}
         className={`${className}  bg-white rounded-lg border-2 border-slate-100 p-10 flex flex-col justify-center gap-5 animate-fade-in`}
       >
         <div
@@ -60,7 +68,7 @@ export const Dialog = ({
           </svg>
         </div>
         {children}
-      </div>
+      </dialog>
     </div>
   );
 };

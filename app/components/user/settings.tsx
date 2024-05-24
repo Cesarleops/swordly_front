@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { Icons } from "../ui/icon";
+import { TestDialog } from "../ui/test-dialog";
 
 export function Settings() {
   const pathname = usePathname();
@@ -14,7 +15,7 @@ export function Settings() {
   }
   console.log(open);
   return (
-    <div className="absolute top-4 right-4">
+    <div className="relative">
       <button onClick={() => setOpen(true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +31,29 @@ export function Settings() {
           <circle cx="12" cy="12" r="3" />
         </svg>
       </button>
-      <Dialog
+      <TestDialog open={open} setOpen={setOpen}>
+        <ul>
+          <li>
+            <Link
+              href="/edit"
+              className="flex gap-2 rounded-xl p-2  font-normal hover:bg-slate-100 "
+            >
+              {Icons.user()}
+              Edit profile
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="http://localhost:3031/api/logout"
+              className="flex gap-2 rounded-xl p-2 hover:bg-[#fff5f5] text-[#f93863] font-normal "
+            >
+              {Icons.logOut()}
+              Log out
+            </Link>
+          </li>
+        </ul>
+      </TestDialog>
+      {/* <Dialog
         open={open}
         className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
         setOpen={setOpen}
@@ -57,7 +80,7 @@ export function Settings() {
             </Link>
           </li>
         </ul>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }
