@@ -1,24 +1,19 @@
 "use client";
-import Link from "next/link";
-import { Icons } from "../components/ui/icon";
-import { userSchema } from "@/utils/schemas";
 import { FormEvent, useState } from "react";
+import { Icons } from "../components/ui/icon";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function Login() {
-  const [errors, setErrors] = useState<{ email: string; password: string }>({
-    email: "",
-    password: "",
-  });
+export default function SignUp() {
+  const [errors, setErrors] = useState({});
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("j", formJson);
-    const res = await fetch("http://localhost:3031/api/login", {
+    const res = await fetch("http://localhost:3031/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,6 +22,7 @@ export default function Login() {
       body: JSON.stringify(formJson),
     });
     const data = await res.json();
+    console.log("reg", data);
     if (!data.success) {
       toast.error(data.message);
       return;
@@ -35,26 +31,23 @@ export default function Login() {
   };
   return (
     <section className="h-screen flex flex-col items-center sm:items-start sm:flex-row gap-10 sm:justify-center px-10">
-      <div className="h-fit flex flex-col gap-6 mt-40 border-2 border-slate-200 p-10 rounded-xl">
+      <div className="h-fit flex flex-col gap-6 mt-40 border-2 border-slate-200 p-10 rounded-xl ">
         <header className="flex flex-col items-center gap-2">
           <div className="flex flex-col  gap-4 items-center ">
             {Icons.sword()}
-            <p className="text-center font-semibold text-3xl">Log in</p>
+            <p className="text-center font-semibold text-3xl">Sign up</p>
           </div>
 
-          <p className="text-left text-xl max-w-3xl text-pretty font-medium">
-            Log in with email and password or your favorite prodiver
+          <p className="text-left text-xl font-medium max-w-3xl text-pretty">
+            Sign up with email and password or your favorite prodiver
           </p>
         </header>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 items-start w-full"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
           <fieldset className="w-full">
             <label htmlFor="email" className="text-lg">
               Email
             </label>
-            <div className="flex items-center p-2 border border-slate-200 rounded-xl">
+            <div className="flex items-center p-2 border border-slate-200 rounded-xl ">
               <input
                 id="email"
                 type="email"
@@ -69,7 +62,7 @@ export default function Login() {
             <label htmlFor="password" className="text-lg">
               Password
             </label>
-            <div className="flex items-center p-2 border border-slate-200 rounded-xl  ">
+            <div className="flex items-center p-2 border border-slate-200 rounded-xl   ">
               <input
                 type="password"
                 id="password"
@@ -87,7 +80,7 @@ export default function Login() {
             ) : null}
           </fieldset>
           <button className="bg-black rounded-lg text-white  w-full p-4 font-mono">
-            Continue
+            Sign up
           </button>
         </form>
 
@@ -111,8 +104,8 @@ export default function Login() {
             </p>
           </Link>
         </div>
-        <Link href={"/signup"} className="text-center font-bold text-green-400">
-          Don&apos;t have an account ?
+        <Link href={"/login"} className="text-center font-bold text-green-400">
+          Already have an account ?
         </Link>
       </div>
     </section>

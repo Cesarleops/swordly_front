@@ -79,10 +79,10 @@ export function CreateLink() {
         blurBack={true}
         blockClicksBehind={true}
       >
-        <p className="text-gray-500 text-2xl">Create a new link</p>
+        <p className="text-gray-500 text-2xl font-bold">Create a new link</p>
         <form onSubmit={handleSubmit} className="flex flex-col  gap-4">
-          <label className="flex flex-col gap-2">
-            Long Link
+          <label className="flex flex-col gap-2 font-bold">
+            Your URL
             <input
               className="border-2 border-slate-200 rounded-lg p-2"
               type="text"
@@ -90,6 +90,7 @@ export function CreateLink() {
               required
               onChange={handleChange}
               name="original"
+              placeholder="https://verylongurl.com"
               aria-describedby="original"
             />
           </label>
@@ -98,14 +99,15 @@ export function CreateLink() {
           ) : (
             ""
           )}
-          <label className="flex flex-col gap-2">
-            Short Link
+          <label className="flex flex-col gap-2 font-bold">
+            Shortened URL
             <input
               type="text"
               className="border-2 border-slate-200 rounded-lg p-2"
               value={input.short}
               required
               onChange={handleChange}
+              placeholder="url"
               name="short"
               aria-describedby="short"
             />
@@ -115,7 +117,7 @@ export function CreateLink() {
           ) : (
             ""
           )}
-          <label className="flex flex-col gap-2">
+          <label className="flex flex-col gap-2 font-bold">
             Description
             <textarea
               value={input.description}
@@ -125,7 +127,7 @@ export function CreateLink() {
               className="border-2 border-slate-200 rounded-lg p-2"
             ></textarea>
           </label>
-          <button className="bg-orange-200 text-orange-600 font-bold p-5 rounded-lg">
+          <button className="bg-black text-white font-mono p-5 rounded-lg">
             Create
           </button>
         </form>

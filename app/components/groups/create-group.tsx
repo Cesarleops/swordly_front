@@ -90,7 +90,7 @@ export const CreateGroup = ({
           <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z" />
           <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z" />
         </svg>
-        <p className="text-[#8f5cd4] hidden lg:block">Group</p>
+        <p className="text-[#8f5cd4] font-bold hidden lg:block">Group</p>
       </div>
       <DropdownMenu
         open={open}
@@ -131,12 +131,15 @@ export const CreateGroup = ({
         open={openGroup}
         setOpen={setOpenGroup}
       >
-        <p className="text-2xl text-gray-500">Create a new group</p>
+        <p className="text-2xl text-gray-500 font-bold">Create a new group</p>
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-          <label htmlFor="name">Group name</label>
+          <label htmlFor="name" className="font-bold">
+            Group name
+          </label>
           <input
             id="name"
             name="name"
+            placeholder="Business"
             aria-describedby="name"
             className="border-2 border-slate-200 rounded-lg p-2"
           />
@@ -145,14 +148,17 @@ export const CreateGroup = ({
           ) : (
             ""
           )}
-          <label htmlFor="describe">Brief description</label>
-          <input
+          <label htmlFor="describe" className="font-bold">
+            Group Description
+          </label>
+          <textarea
             id="describe"
             name="description"
+            placeholder="Track business urls."
             className="border-2 border-slate-200 rounded-lg p-2"
           />
           <div className="flex flex-col gap-4">
-            <p className=" p-2 w-fit ">
+            <p className="mt-2 w-fit font-bold text-blue-500">
               Select the links you want to add to this group
             </p>
             <ul className="flex flex-wrap gap-4 max-w-xl">
@@ -163,7 +169,7 @@ export const CreateGroup = ({
               )}
               {links.map((li) => (
                 <li
-                  className={`border-2 border-slate-200 w-fit p-2 rounded-lg ${
+                  className={`border font-light border-slate-200 w-fit p-2 rounded-lg ${
                     selectedLinks.map((li) => li.short).includes(li.short)
                       ? "bg-black text-white"
                       : ""

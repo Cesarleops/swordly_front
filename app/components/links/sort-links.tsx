@@ -32,7 +32,7 @@ export const SortLinks = () => {
           <path d="m21 8-4-4-4 4" />
           <path d="M17 4v16" />
         </svg>
-        <p className="text-[#379afc] hidden lg:block">Sort</p>
+        <p className="text-[#379afc] font-bold hidden lg:block">Sort</p>
       </div>
       <DropdownMenu
         open={open}

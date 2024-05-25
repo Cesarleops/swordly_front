@@ -19,6 +19,7 @@ export const createNewGroup = async (formJson: any, selectedLinks: any) => {
 };
 export const getUser = async () => {
   const cookieStore = cookies();
+  console.log("front cookie", cookieStore);
   const cookie = cookieStore.get("auth_session");
   console.log("pido al usuario");
   try {
@@ -28,11 +29,13 @@ export const getUser = async () => {
       },
     });
     const data = await res.json();
+    console.log("usuario", data);
     if (data.user === "Invalid User") {
       redirect("http://localhost:3000/login");
     }
     return data;
   } catch (error) {
+    console.log("error yendo", error);
     redirect("http://localhost:3000/login");
   }
 };

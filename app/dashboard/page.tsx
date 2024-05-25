@@ -45,7 +45,7 @@ export default async function Dashboard({
               <line x1="12" x2="12" y1="20" y2="4" />
               <line x1="6" x2="6" y1="20" y2="14" />
             </svg>
-            <span>{user.links_amount}/20</span>
+            <span className="font-bold">{user.links_amount}/20</span>
           </div>
           <SortLinks />
           <CreateGroup links={links} />
