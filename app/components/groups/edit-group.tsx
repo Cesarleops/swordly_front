@@ -13,7 +13,6 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("json", formJson);
     const updatedLink = await fetch("http://localhost:3031/api/groups", {
       headers: {
         "Content-Type": "application/json",

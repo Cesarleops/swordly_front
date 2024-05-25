@@ -2,11 +2,11 @@ import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 import { updateLink } from "@/utils/services";
-import { LinkSchema } from "@/utils/schemas";
+import { EditedLinkSchema, LinkSchema } from "@/utils/schemas";
 
 export const EditLink = ({ id, link }: { id: number; link: any }) => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [errors, setErrors] = useState<{ message: string; errors: any[] }>({
+  const [errors, setErrors] = useState<any>({
     message: "",
     errors: [],
   });
@@ -16,11 +16,14 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("f", formJson);
-    const validateEditedLink = LinkSchema.safeParse(formJson);
-    console.log("de", validateEditedLink);
-
-    await updateLink(id, formJson);
+    const validateEditedLink = EditedLinkSchema.safeParse(formJson);
+    console.log("el link es valido", validateEditedLink);
+    if (!validateEditedLink.success) {
+      setErrors(validateEditedLink.error?.format());
+      return;
+    }
+    const updatedLink = await updateLink(id, formJson);
+    console.log("res", updatedLink);
     router.refresh();
   };
 
@@ -66,9 +69,10 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
           </label>
           <input
             type="text"
-            className="border-2 border-slate-200 rounded-lg p-2"
+            className="border-2 border-slate-200 rounded-lg p-2 bg-gray-200"
             name="short"
             defaultValue={link.short}
+            disabled={true}
             id="short"
           />
           <label htmlFor="description" className="flex flex-col gap-2">
@@ -82,7 +86,7 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
           ></textarea>
           <button
             type="submit"
-            className="bg-black text-white p-4 w-1/2 rounded-lg self-center "
+            className="bg-black text-white p-4 rounded-lg self-center "
           >
             Save changes
           </button>

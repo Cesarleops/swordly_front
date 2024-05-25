@@ -3,7 +3,6 @@ import { getGroups } from "@/utils/actions";
 import Link from "next/link";
 export default async function Groups({ params }: any) {
   const groups = await getGroups();
-
   return (
     <section>
       <header className="flex gap-3 items-center px-10 pt-5">

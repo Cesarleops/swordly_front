@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
-import { Dialog } from "../ui/dialog";
+
 import { useState } from "react";
 import { EditGroup } from "./edit-group";
 import { DeleteGroup } from "./delete-group";
+import { DropdownMenu } from "../ui/dropdown-menu";
 
 export const GroupOptions = ({
   name,
@@ -29,12 +29,10 @@ export const GroupOptions = ({
           <circle cx="12" cy="12" r="3" />
         </svg>
       </button>
-      <Dialog
+      <DropdownMenu
         open={open}
         className="absolute flex flex-col right-2 w-[200px] px-5 py-10 z-50"
         setOpen={setOpen}
-        blurBack={false}
-        blockClicksBehind={true}
       >
         <ul className="flex flex-col gap-3 mt-2">
           <li>
@@ -49,7 +47,7 @@ export const GroupOptions = ({
             <DeleteGroup id={id} />
           </li>
         </ul>
-      </Dialog>
+      </DropdownMenu>
     </div>
   );
 };

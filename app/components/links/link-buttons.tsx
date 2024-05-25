@@ -1,11 +1,11 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { CopyClipboard } from "../user/copy-clipboard";
 import { GenerateQR } from "./generate-qr";
 import { DeleteLink } from "./delete-link";
 import { EditLink } from "./edit-link";
-import { Dialog } from "../ui/dialog";
+import { DropdownMenu } from "../ui/dropdown-menu";
 
 export const LinkButtons = ({ id, link }: { id: number; link: any }) => {
   const [open, setOpen] = useState(false);
@@ -32,12 +32,10 @@ export const LinkButtons = ({ id, link }: { id: number; link: any }) => {
           <circle cx="5" cy="12" r="1" />
         </svg>
       </nav>
-      <Dialog
+      <DropdownMenu
         open={open}
         className="absolute flex flex-col items-center gap-4 right-1 top-0 w-[200px] px-5 py-12 z-50"
         setOpen={setOpen}
-        blurBack={false}
-        blockClicksBehind={true}
       >
         <p className="text-left self-start font-bold">/{link.short}</p>
         <span className="flex gap-4 items-center justify-start  bg-slate-100 p-4 pr-7 rounded-lg">
@@ -48,7 +46,7 @@ export const LinkButtons = ({ id, link }: { id: number; link: any }) => {
           Delete
           <DeleteLink id={id} />
         </span>
-      </Dialog>
+      </DropdownMenu>
     </>
   );
 };

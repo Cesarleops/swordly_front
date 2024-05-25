@@ -12,7 +12,7 @@ export async function createNewLink(input: any) {
 }
 
 export async function updateLink(id: number, formJson: { [key: string]: any }) {
-  const updatedLink = await fetch("http://localhost:3031/api/links", {
+  const res = await fetch("http://localhost:3031/api/links", {
     headers: {
       "Content-Type": "application/json",
     },
@@ -20,7 +20,8 @@ export async function updateLink(id: number, formJson: { [key: string]: any }) {
     credentials: "include",
     body: JSON.stringify({ id, ...formJson }),
   });
-  console.log(updatedLink);
+  const data = await res.json();
+  return data;
 }
 
 export async function deleteLink(id: string) {

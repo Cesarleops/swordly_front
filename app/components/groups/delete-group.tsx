@@ -1,13 +1,14 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
+import { toast } from "sonner";
 
 export const DeleteGroup = ({ id }: { id: number }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
-    const del = await fetch("http://localhost:3031/api/groups", {
+    const res = await fetch("http://localhost:3031/api/groups", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -15,7 +16,8 @@ export const DeleteGroup = ({ id }: { id: number }) => {
       credentials: "include",
       body: JSON.stringify({ id }),
     });
-    console.log(del);
+    const data = await res.json();
+    setOpenDelete(false);
     router.refresh();
   };
   return (

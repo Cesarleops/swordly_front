@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export const DialogOverlay = () => {
   return (
@@ -33,15 +33,7 @@ export const Dialog = ({
     <div>
       {blockClicksBehind && <BlockClicks />}
       {blurBack && <DialogOverlay />}
-      <dialog
-        open={open}
-        onClick={(e) => {
-          console.log(e.target);
-          console.log(e.currentTarget);
-          if (e.currentTarget === e.target) {
-            setOpen(false);
-          }
-        }}
+      <div
         className={`${className}  bg-white rounded-lg border-2 border-slate-100 p-10 flex flex-col justify-center gap-5 animate-fade-in`}
       >
         <div
@@ -68,7 +60,7 @@ export const Dialog = ({
           </svg>
         </div>
         {children}
-      </dialog>
+      </div>
     </div>
   );
 };

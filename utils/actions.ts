@@ -102,7 +102,7 @@ export const getGroups = async () => {
       },
     });
     const data = await response.json();
-    return data.rows;
+    return data.groups;
   } catch (error) {
     console.log(error);
   }
@@ -119,7 +119,7 @@ export const getSingleGroup = async (id: string) => {
     });
     const data = await response.json();
 
-    return data;
+    return data.group;
   } catch (error) {
     console.log(error);
   }

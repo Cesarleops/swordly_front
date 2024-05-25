@@ -25,6 +25,19 @@ export const LinkSchema = z.object({
     }),
 });
 
+export const EditedLinkSchema = z.object({
+  original: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Field can't be empty",
+    })
+    .regex(checkValidUrl, {
+      message:
+        "Please provide a valid url. \n use the prefix http:// or https://",
+    }),
+});
+
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().regex(checkSafePassword, {
