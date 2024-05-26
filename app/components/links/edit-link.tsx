@@ -52,11 +52,11 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
         blockClicksBehind={false}
       >
-        <p className="text-left text-gray-500 text-2xl">
+        <p className="text-left text-gray-500 text-2xl font-bold">
           Editing <span className="text-green-400">/{link.short}</span>
         </p>
-        <form onSubmit={handleEdit} className="flex flex-col items-start gap-4">
-          <label className="flex flex-col gap-2">Long Link</label>
+        <form onSubmit={handleEdit} className="flex flex-col items-start gap-2">
+          <label className="flex flex-col gap-2 font-bold">Your URL</label>
           <input
             className="border-2 border-slate-200 rounded-lg p-2"
             type="text"
@@ -64,8 +64,8 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
             name="original"
             defaultValue={link.original}
           />
-          <label htmlFor="short" className="flex flex-col gap-2">
-            Short Link
+          <label htmlFor="short" className="flex flex-col gap-2 font-bold">
+            Shortened URL
           </label>
           <input
             type="text"
@@ -75,8 +75,11 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
             disabled={true}
             id="short"
           />
-          <label htmlFor="description" className="flex flex-col gap-2">
-            description
+          <label
+            htmlFor="description"
+            className="flex flex-col gap-2 font-bold"
+          >
+            Description
           </label>
           <textarea
             className="border-2 border-slate-200 rounded-lg p-2"
@@ -86,7 +89,7 @@ export const EditLink = ({ id, link }: { id: number; link: any }) => {
           ></textarea>
           <button
             type="submit"
-            className="bg-black text-white p-4 rounded-lg self-center "
+            className="bg-black text-white p-4 rounded-lg w-full mt-2"
           >
             Save changes
           </button>

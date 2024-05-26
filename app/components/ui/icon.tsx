@@ -44,7 +44,7 @@ export const Icons = {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="p-2 bg-green-200 stroke-green-500 rounded-md"
+      className="p-2 bg-green-200 stroke-green-500 rounded-md h-14 w-14"
     >
       <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
       <line x1="13" x2="19" y1="19" y2="13" />

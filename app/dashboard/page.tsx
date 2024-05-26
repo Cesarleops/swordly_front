@@ -10,6 +10,7 @@ type Link = {
   original: string;
   short: string;
   clicks: number;
+  description: string;
 };
 
 export default async function Dashboard({
@@ -84,17 +85,20 @@ export default async function Dashboard({
           {links.length > 0 &&
             links.map((li: Link) => (
               <div
-                className="flex flex-col border border-slate-300 p-5 rounded-lg relative w-[100%]  md:w-[30%] animate-fade-in"
+                className="flex flex-col gap-2 border h-[150px] max-h-[150px] border-slate-300 p-5 rounded-lg relative w-[100%]  md:w-[30%] animate-fade-in"
                 key={li.id}
               >
                 <LinkButtons id={li.id} link={li} />
                 <a
                   href={`http://localhost:3031/api/links/${li.short}`}
                   target="_blank"
-                  className="w-fit"
+                  className="w-fit text-blue-500 text-xl font-bold"
                 >
                   /{li.short}
                 </a>
+                <p className="text-pretty text-ellipsis overflow-hidden">
+                  {li.description}
+                </p>
                 <a
                   href={li.original}
                   className="text-slate-400  text-ellipsis overflow-hidden max-w-sm"

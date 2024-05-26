@@ -27,8 +27,7 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
 
   return (
     <>
-      <div className="flex gap-2 items-center bg-slate-100 p-2 rounded-md">
-        Edit Group
+      <div className="flex gap-2 items-center bg-slate-100 p-2 rounded-md font-bold">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -80,7 +79,9 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
             <p className="font-bold">Add more links</p>
             <div className="flex gap-2 flex-wrap">
               {available_links.length === 0 && (
-                <p className="text-slate-400">There are not available links.</p>
+                <p className="text-slate-400 mt-2">
+                  There are not available links.
+                </p>
               )}
               {available_links.map((li: any) => (
                 <div

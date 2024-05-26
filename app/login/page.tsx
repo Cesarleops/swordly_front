@@ -69,7 +69,7 @@ export default function Login() {
             <label htmlFor="password" className="text-lg">
               Password
             </label>
-            <div className="flex items-center p-2 border border-slate-200 rounded-xl  ">
+            <div className="flex items-center p-2 border border-slate-200 rounded-xl  mb-4">
               <input
                 type="password"
                 id="password"
@@ -85,6 +85,12 @@ export default function Login() {
                 {errors.password._errors[0]}
               </p>
             ) : null}
+            <Link
+              className="flex justify-end text-right text-bold text-blue-500 "
+              href={"/"}
+            >
+              Change Password
+            </Link>
           </fieldset>
           <button className="bg-black rounded-lg text-white  w-full p-4 font-mono">
             Continue

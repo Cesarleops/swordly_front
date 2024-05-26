@@ -12,7 +12,6 @@ export function Settings() {
   if (pathname !== "/dashboard") {
     return null;
   }
-  console.log(open);
   return (
     <div className="relative">
       <button onClick={() => setOpen(true)}>
@@ -36,20 +35,21 @@ export function Settings() {
         className="absolute flex flex-col top-14 right-6 w-[200px] px-5 py-10 z-50"
         setOpen={setOpen}
       >
+        <p className="text-lg font-bold mb-2">Options Menu</p>
         <ul>
           <li>
             <Link
-              href="/edit"
-              className="flex gap-2 rounded-xl p-2  font-normal hover:bg-slate-100 "
+              href="/dashboard/settings"
+              className="flex  items-center gap-2 rounded-xl p-2  font-normal hover:bg-slate-100 "
             >
               {Icons.user()}
-              Edit profile
+              Settings
             </Link>
           </li>
           <li>
             <Link
               href="http://localhost:3031/api/logout"
-              className="flex gap-2 rounded-xl p-2 hover:bg-[#fff5f5] text-[#f93863] font-normal "
+              className="flex gap-2 rounded-xl items-center p-2 hover:bg-[#fff5f5] text-[#f93863] font-normal "
             >
               {Icons.logOut()}
               Log out

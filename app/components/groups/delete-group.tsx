@@ -22,8 +22,7 @@ export const DeleteGroup = ({ id }: { id: number }) => {
   };
   return (
     <>
-      <div className="flex gap-2 items-center bg-red-100 text-red-500  py-2 px-1 rounded-md">
-        Delete Group
+      <div className="flex gap-2 items-center bg-red-100 text-red-500 font-bold  py-2 px-1 rounded-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
