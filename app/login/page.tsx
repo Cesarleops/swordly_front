@@ -12,12 +12,13 @@ export default function Login() {
     password: "",
   });
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log("j", formJson);
+    setLoading(true);
     const res = await fetch("http://localhost:3031/api/login", {
       method: "POST",
       headers: {
@@ -27,6 +28,7 @@ export default function Login() {
       body: JSON.stringify(formJson),
     });
     const data = await res.json();
+    setLoading(false);
     if (!data.success) {
       toast.error(data.message);
       return;
@@ -86,14 +88,15 @@ export default function Login() {
               </p>
             ) : null}
             <Link
-              className="flex justify-end text-right text-bold text-blue-500 "
-              href={"/"}
+              className="flex justify-end text-right text-bold text-blue-500 underline decoration-1"
+              href={"/passwordreset"}
             >
               Change Password
             </Link>
           </fieldset>
-          <button className="bg-black rounded-lg text-white  w-full p-4 font-mono">
+          <button className="flex items-center justify-center gap-2 bg-black rounded-lg text-white  w-full p-4 font-mono">
             Continue
+            {loading && <div className="animate-spin">...</div>}
           </button>
         </form>
 
