@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
+import { toast } from "sonner";
 
 export const EditGroup = ({ id, name, description, available_links }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -9,11 +10,10 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
 
   const handleEdit = async (e: FormEvent) => {
     e.preventDefault();
-
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    const updatedLink = await fetch("http://localhost:3031/api/groups", {
+    const res = await fetch("http://localhost:3031/api/groups", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -21,8 +21,16 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
       body: JSON.stringify({ id, new_links: selectedLinks, ...formJson }),
       credentials: "include",
     });
-    console.log(updatedLink);
-    router.refresh();
+    const updatedLink = await res.json();
+    if (updatedLink.success) {
+      toast.success("Your Group was succesfully updated.");
+      router.refresh();
+      return;
+    } else {
+      toast.error(
+        `Something went wrong updating your group, ${updatedLink.message}`
+      );
+    }
   };
 
   return (

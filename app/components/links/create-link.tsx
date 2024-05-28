@@ -11,26 +11,15 @@ import { InputError } from "../ui/error";
 export function CreateLink() {
   const [clicked, setClicked] = useState(false);
   const [errors, setErrors] = useState<any>(false);
-  const [input, setInput] = useState({
-    original: "",
-    short: "",
-    description: "",
-  });
-  const router = useRouter();
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setInput((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const validateNewLink = LinkSchema.safeParse(input);
+    const form: HTMLFormElement = e.target as HTMLFormElement;
+    const formData = new FormData(form as HTMLFormElement);
+    const formJson = Object.fromEntries(formData.entries());
+    const validateNewLink = LinkSchema.safeParse(formJson);
 
     if (!validateNewLink.success) {
       toast.error("Something went wrong creating your link");
@@ -38,26 +27,21 @@ export function CreateLink() {
       return;
     }
 
-    if (input.original === input.short) {
+    if (formJson.original === formJson.short) {
       toast.error("Can't use the same link in the shortened version");
       return;
     }
 
     try {
-      const newLink = await createNewLink(input);
+      const newLink = await createNewLink(formJson);
       console.log("resultado de crear", newLink);
       if (newLink.message === "The short link already exists") {
         toast.info(newLink.message);
         return;
       }
       toast.success("Your was link created");
-      setInput({
-        original: "",
-        short: "",
-        description: "",
-      });
+      form.reset();
       setErrors(false);
-
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong creating your link");
@@ -86,9 +70,7 @@ export function CreateLink() {
             <input
               className="border-2 border-slate-200 rounded-lg p-2"
               type="text"
-              value={input.original}
               required
-              onChange={handleChange}
               name="original"
               placeholder="https://verylongurl.com"
               aria-describedby="original"
@@ -104,9 +86,7 @@ export function CreateLink() {
             <input
               type="text"
               className="border-2 border-slate-200 rounded-lg p-2"
-              value={input.short}
               required
-              onChange={handleChange}
               placeholder="url"
               name="short"
               aria-describedby="short"
@@ -120,8 +100,6 @@ export function CreateLink() {
           <label className="flex flex-col gap-2 font-bold">
             Description
             <textarea
-              value={input.description}
-              onChange={handleChange}
               placeholder="Optional"
               name="description"
               className="border-2 border-slate-200 rounded-lg p-2"

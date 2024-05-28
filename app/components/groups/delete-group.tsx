@@ -17,8 +17,12 @@ export const DeleteGroup = ({ id }: { id: number }) => {
       body: JSON.stringify({ id }),
     });
     const data = await res.json();
-    setOpenDelete(false);
-    router.refresh();
+    if (data.success) {
+      setOpenDelete(false);
+      router.refresh();
+    } else {
+      toast.error("Something went wrong deleting your link.");
+    }
   };
   return (
     <>
