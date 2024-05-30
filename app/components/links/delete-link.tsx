@@ -2,21 +2,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
+import { deleteLink } from "@/utils/services";
 
-export const DeleteLink = ({ id }: { id: number }) => {
+export const DeleteLink = ({ id }: { id: string }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
-    const res = await fetch("http://localhost:3031/api/links", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ id }),
-    });
-    const data = await res.json();
+    const data = await deleteLink(id);
     if (data.success) {
       console.log("d", data.deletedLink);
       toast.success(`Deleted link ${data.deletedLink.short}`);

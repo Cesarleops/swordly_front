@@ -4,6 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 import { Dialog } from "../../components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { resetPassword, validatePasswordReset } from "@/utils/actions";
 
 export default function PasswordReset() {
   const [otpInput, setOtpInput] = useState(false);
@@ -13,23 +14,13 @@ export default function PasswordReset() {
 
   const sendOTP = async (e: FormEvent) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = Object.fromEntries(
-      new FormData(form as HTMLFormElement).entries()
-    );
+    const form = e.target as HTMLFormElement;
+    const formData = Object.fromEntries(new FormData(form).entries());
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3031/api/user/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ recovery_email: formData.email }),
-      });
-      const data = await res.json();
+      const data = await resetPassword(formData);
       if (data.success) {
-        console.log("viene", data.recovery_email);
         setEmail(data.recovery_email);
         setOtpInput(true);
       }
@@ -47,24 +38,15 @@ export default function PasswordReset() {
       new FormData(e.target as HTMLFormElement).entries()
     );
     const responseOtp = Object.values(formData).join("");
-    console.log(responseOtp);
-    console.log("email", email);
-    console.log(
-      JSON.stringify({ user_otp: responseOtp, recovery_email: email })
-    );
     try {
-      const res = await fetch("http://localhost:3031/api/user/validate-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_otp: responseOtp, recovery_email: email }),
-      });
-      console.log("res", res);
-      const data = await res.json();
-      console.log(data);
+      const data = await validatePasswordReset(
+        responseOtp,
+        formData.email as string
+      );
       if (data.success) {
         router.push(`/passwordreset/${data.token}`);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
       console.log("me cago en todo", error);

@@ -1,5 +1,7 @@
+import envConfig from "./constants";
+
 export async function createNewLink(input: any) {
-  const res = await fetch("http://localhost:3031/api/links", {
+  const res = await fetch(`${envConfig.apiUrl}/links`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -11,8 +13,8 @@ export async function createNewLink(input: any) {
   return data;
 }
 
-export async function updateLink(id: number, formJson: { [key: string]: any }) {
-  const res = await fetch("http://localhost:3031/api/links", {
+export async function updateLink(id: string, formJson: { [key: string]: any }) {
+  const res = await fetch(`${envConfig.apiUrl}/links`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,7 +27,7 @@ export async function updateLink(id: number, formJson: { [key: string]: any }) {
 }
 
 export async function deleteLink(id: string) {
-  const del = await fetch("http://localhost:3031/api/links", {
+  const del = await fetch(`${envConfig.apiUrl}/links`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -34,4 +36,6 @@ export async function deleteLink(id: string) {
     body: JSON.stringify({ id }),
   });
   console.log(del);
+  const data = del.json();
+  return data;
 }

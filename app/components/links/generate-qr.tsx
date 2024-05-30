@@ -2,18 +2,16 @@
 import QRCode from "qrcode";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
+import envConfig from "@/utils/constants";
 export const GenerateQR = ({ short }: { short: string }) => {
   const [qr, setQr] = useState("");
   const [open, setOpen] = useState(false);
 
   const generateQRCode = async () => {
     try {
-      let url = await QRCode.toDataURL(
-        `http://localhost:3031/api/links/${short}`,
-        {
-          errorCorrectionLevel: "H",
-        }
-      );
+      let url = await QRCode.toDataURL(`${envConfig.apiUrl}/links/${short}`, {
+        errorCorrectionLevel: "H",
+      });
       setQr(url);
       setOpen(true);
     } catch (error) {

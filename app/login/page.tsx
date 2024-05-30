@@ -5,6 +5,7 @@ import { userSchema } from "@/utils/schemas";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { userLogin } from "@/utils/actions";
 
 export default function Login() {
   const [errors, setErrors] = useState<{ email: string; password: string }>({
@@ -19,15 +20,7 @@ export default function Login() {
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
     setLoading(true);
-    const res = await fetch("http://localhost:3031/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(formJson),
-    });
-    const data = await res.json();
+    const data = await userLogin(formJson);
     setLoading(false);
     if (!data.success) {
       toast.error(data.message);

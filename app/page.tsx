@@ -1,6 +1,10 @@
+import envConfig from "@/utils/constants";
 import Link from "next/link";
 
 export default function Home() {
+  console.log(process.env.NODE_ENV);
+  console.log("con", envConfig);
+
   return (
     <section className="w-screen h-screen flex flex-col  gap-10 items-center pt-40 ">
       <div className="flex flex-col items-center gap-5">

@@ -5,7 +5,7 @@ import { GenerateQR } from "./generate-qr";
 import { DeleteLink } from "./delete-link";
 import { EditLink } from "./edit-link";
 
-export const LinkButtons = ({ id, link }: { id: number; link: any }) => {
+export const LinkButtons = ({ id, link }: { id: string; link: any }) => {
   return (
     <>
       <nav className="absolute top-2 right-2 flex items-center gap-3">

@@ -1,33 +1,24 @@
 "use client";
 
+import { newPassword } from "@/utils/actions";
 import { useParams } from "next/navigation";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 
 export default function NewPassword(props: any) {
-  console.log(props);
   const params = useParams();
-  console.log(params);
   const handleUpdatePassword = async (e: FormEvent) => {
     e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target).entries());
+    const formData = Object.fromEntries(
+      new FormData(e.target as HTMLFormElement).entries()
+    );
     console.log(formData);
     if (formData.newPassword === formData.confirm) {
-      console.log("go");
-      console.log(params.id);
-      const res = await fetch(
-        `http://localhost:3031/api/user/update-password/${params.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      const data = await res.json();
+      const data = await newPassword(formData, params);
       if (data.success) {
         toast.success("your password was updated");
+      } else {
+        toast.error(data.message);
       }
     }
   };

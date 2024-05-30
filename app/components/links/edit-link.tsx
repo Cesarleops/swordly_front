@@ -4,7 +4,7 @@ import { Dialog } from "../ui/dialog";
 import { updateLink } from "@/utils/services";
 import { EditedLinkSchema, LinkSchema } from "@/utils/schemas";
 
-export const EditLink = ({ id, link }: { id: number; link: any }) => {
+export const EditLink = ({ id, link }: { id: string; link: any }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [errors, setErrors] = useState<any>({
     message: "",

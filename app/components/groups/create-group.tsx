@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { InputError } from "../ui/error";
 import { useRouter } from "next/navigation";
 import { DropdownMenu } from "../ui/dropdown-menu";
+import { createNewGroup } from "@/utils/actions";
 
 export const CreateGroup = ({
   links,
@@ -31,18 +32,7 @@ export const CreateGroup = ({
       return;
     }
 
-    const res = await fetch("http://localhost:3031/api/groups", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        name: formJson.name,
-        description: formJson.description,
-        links: selectedLinks,
-      }),
-    });
-
-    const data = await res.json();
+    const data = await createNewGroup(formJson, selectedLinks);
     console.log(data);
     if (!data.success) {
       setErrors(data.message);
