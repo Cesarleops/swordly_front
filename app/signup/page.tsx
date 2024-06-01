@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignUp() {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<any>({});
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
