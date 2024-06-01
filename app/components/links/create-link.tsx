@@ -7,11 +7,15 @@ import { toast } from "sonner";
 import { createNewLink } from "@/utils/services";
 import { LinkSchema } from "@/utils/schemas";
 import { InputError } from "../ui/error";
+import { Icons } from "../ui/icon";
 
 export function CreateLink() {
   const [clicked, setClicked] = useState(false);
-  const [errors, setErrors] = useState<any>(false);
-
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<any>({
+    original: undefined,
+    short: undefined,
+  });
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -23,6 +27,7 @@ export function CreateLink() {
 
     if (!validateNewLink.success) {
       toast.error("Something went wrong creating your link");
+      console.log(validateNewLink.error?.format());
       setErrors(validateNewLink.error?.format());
       return;
     }
@@ -33,15 +38,17 @@ export function CreateLink() {
     }
 
     try {
+      setLoading(true);
       const newLink = await createNewLink(formJson);
       console.log("resultado de crear", newLink);
+      setLoading(false);
       if (newLink.message === "The short link already exists") {
         toast.info(newLink.message);
         return;
       }
       toast.success("Your was link created");
       form.reset();
-      setErrors(false);
+      setErrors({});
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong creating your link");
@@ -55,6 +62,7 @@ export function CreateLink() {
       >
         <p className="hidden lg:block">Create Link</p>
         <span className="block lg:hidden">+</span>
+        {loading && Icons.loading()}
       </button>
       <Dialog
         className="fixed z-50 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]  p-10"
@@ -76,8 +84,8 @@ export function CreateLink() {
               aria-describedby="original"
             />
           </label>
-          {errors.original?._errors.length > 0 ? (
-            <InputError id="original" errors={errors.original._errors} />
+          {errors && errors.original?._errors.length > 0 ? (
+            <InputError id="original" errors={errors.original?._errors} />
           ) : (
             ""
           )}

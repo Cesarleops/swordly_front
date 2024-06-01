@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
-import { updateGroup } from "@/utils/actions";
+import { updateGroup } from "@/utils/services";
 
 export const EditGroup = ({ id, name, description, available_links }: any) => {
   const [openEdit, setOpenEdit] = useState(false);

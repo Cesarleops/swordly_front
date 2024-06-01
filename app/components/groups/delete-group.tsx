@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
-import { deleteGroup } from "@/utils/actions";
+import { deleteGroup } from "@/utils/services";
 
 export const DeleteGroup = ({ id }: { id: string }) => {
   const [openDelete, setOpenDelete] = useState(false);

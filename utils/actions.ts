@@ -1,4 +1,4 @@
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import envConfig from "./constants";
 
@@ -111,34 +111,4 @@ export const getSingleGroup = async (id: string) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-export const deleteGroup = async (id: string) => {
-  const res = await fetch(`${envConfig.apiUrl}/groups`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({ id }),
-  });
-  const data = await res.json();
-  return data;
-};
-
-export const updateGroup = async (
-  id: string,
-  selectedLinks: string[],
-  formJson: any
-) => {
-  const res = await fetch(`${envConfig.apiUrl}/groups`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "PUT",
-    body: JSON.stringify({ id, new_links: selectedLinks, ...formJson }),
-    credentials: "include",
-  });
-  const updatedLink = await res.json();
-  return updatedLink;
 };

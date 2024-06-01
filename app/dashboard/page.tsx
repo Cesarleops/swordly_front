@@ -6,7 +6,7 @@ import { getUser, getLinks } from "@/utils/actions";
 import { SearchLink } from "../components/links/search-link";
 
 type Link = {
-  id: number;
+  id: string;
   original: string;
   short: string;
   clicks: number;

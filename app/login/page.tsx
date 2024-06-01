@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { userLogin } from "@/utils/services";
 
 export default function Login() {
-  const [errors, setErrors] = useState<{ email: string; password: string }>({
+  const [errors, setErrors] = useState<any>({
     email: "",
     password: "",
   });
@@ -89,7 +89,7 @@ export default function Login() {
           </fieldset>
           <button className="flex items-center justify-center gap-2 bg-black rounded-lg text-white  w-full p-4 font-mono">
             Continue
-            {loading && <div className="animate-spin">...</div>}
+            {loading && Icons.loading()}
           </button>
         </form>
 
