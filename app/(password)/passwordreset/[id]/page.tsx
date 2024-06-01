@@ -1,6 +1,6 @@
 "use client";
 
-import { newPassword } from "@/utils/actions";
+import { newPassword } from "@/utils/services";
 import { useParams } from "next/navigation";
 import { FormEvent } from "react";
 import { toast } from "sonner";

@@ -4,7 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 import { Dialog } from "../../components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { resetPassword, validatePasswordReset } from "@/utils/actions";
+import { resetPassword, validatePasswordReset } from "@/utils/services";
 
 export default function PasswordReset() {
   const [otpInput, setOtpInput] = useState(false);

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { InputError } from "../ui/error";
 import { useRouter } from "next/navigation";
 import { DropdownMenu } from "../ui/dropdown-menu";
-import { createNewGroup } from "@/utils/actions";
+import { createNewGroup } from "@/utils/services";
 
 export const CreateGroup = ({
   links,

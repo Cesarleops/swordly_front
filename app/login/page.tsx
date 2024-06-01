@@ -5,7 +5,7 @@ import { userSchema } from "@/utils/schemas";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { userLogin } from "@/utils/actions";
+import { userLogin } from "@/utils/services";
 
 export default function Login() {
   const [errors, setErrors] = useState<{ email: string; password: string }>({
