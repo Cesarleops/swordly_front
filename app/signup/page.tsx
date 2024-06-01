@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignUp() {
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<any>({
+    password: {
+      _errors: [],
+    },
+  });
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -73,7 +77,7 @@ export default function SignUp() {
               />
               {Icons.password()}
             </div>
-            {errors.password ? (
+            {errors.password._errors.length > 0 ? (
               <p className="text-red-500 text-sm text-pretty ">
                 {errors.password._errors[0]}
               </p>
