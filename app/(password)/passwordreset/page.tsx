@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { FormEvent, useRef, useState } from "react";
-import { Dialog } from "../../components/ui/dialog";
+import { Dialog } from "../../../components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { resetPassword, validatePasswordReset } from "@/utils/services";

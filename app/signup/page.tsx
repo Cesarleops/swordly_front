@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Icons } from "../components/ui/icon";
+import { Icons } from "../../components/ui/icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

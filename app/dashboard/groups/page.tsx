@@ -1,4 +1,4 @@
-import { GroupCard } from "@/app/components/groups/group-card";
+import { GroupCard } from "@/components/groups/group-card";
 import { getGroups } from "@/utils/actions";
 import Link from "next/link";
 export default async function Groups({ params }: any) {

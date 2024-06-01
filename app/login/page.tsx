@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Icons } from "../components/ui/icon";
+import { Icons } from "../../components/ui/icon";
 import { userSchema } from "@/utils/schemas";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";

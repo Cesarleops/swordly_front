@@ -3,7 +3,7 @@ import { GeistMono } from "geist/font/mono";
 
 import "./globals.css";
 import Link from "next/link";
-import { Settings } from "./components/user/settings";
+import { Settings } from "../components/user/settings";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {

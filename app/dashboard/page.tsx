@@ -1,9 +1,9 @@
-import { CreateLink } from "../components/links/create-link";
-import { LinkButtons } from "../components/links/link-buttons";
-import { CreateGroup } from "../components/groups/create-group";
-import { SortLinks } from "../components/links/sort-links";
+import { CreateLink } from "../../components/links/create-link";
+import { LinkButtons } from "../../components/links/link-buttons";
+import { CreateGroup } from "../../components/groups/create-group";
+import { SortLinks } from "../../components/links/sort-links";
 import { getUser, getLinks } from "@/utils/actions";
-import { SearchLink } from "../components/links/search-link";
+import { SearchLink } from "../../components/links/search-link";
 
 type Link = {
   id: string;
