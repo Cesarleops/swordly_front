@@ -97,7 +97,7 @@ export default function Login() {
 
         <div className="flex flex-col gap-4  ">
           <Link
-            href={`${envConfig.apiUrl}/api/login/github`}
+            href={`${envConfig.apiUrl}/login/github`}
             className="p-2 border border-slate-200 rounded-md flex gap-2 justify-center items-center"
           >
             {Icons.github()}
@@ -106,7 +106,7 @@ export default function Login() {
             </p>
           </Link>
           <Link
-            href={`${envConfig.apiUrl}/api/login/google`}
+            href={`${envConfig.apiUrl}/login/google`}
             className="p-2  border border-slate-200 rounded-md flex gap-2 items-center justify-center"
           >
             {Icons.google()}
