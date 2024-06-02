@@ -16,12 +16,12 @@ export const getUser = async () => {
     const data = await res.json();
     console.log("usuario", data);
     if (data.user === "Invalid User") {
-      redirect("http://localhost:3000/login");
+      redirect(`${envConfig.clientUrl}/login`);
     }
     return data;
   } catch (error) {
     console.log("error yendo", error);
-    redirect("http://localhost:3000/login");
+    redirect(`${envConfig.clientUrl}/login`);
   }
 };
 
