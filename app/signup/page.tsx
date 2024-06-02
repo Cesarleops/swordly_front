@@ -19,7 +19,7 @@ export default function SignUp() {
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
     console.log(envConfig);
-    const res = await fetch(`${envConfig.apiUrl}/api/signup`, {
+    const res = await fetch(`${envConfig.apiUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
