@@ -4,6 +4,7 @@ import { Icons } from "../../components/ui/icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import envConfig from "@/utils/constants";
 
 export default function SignUp() {
   const [errors, setErrors] = useState<any>({
@@ -17,7 +18,8 @@ export default function SignUp() {
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    const res = await fetch("http://localhost:3031/api/signup", {
+    console.log(envConfig);
+    const res = await fetch(`${envConfig.apiUrl}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
