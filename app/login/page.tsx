@@ -30,6 +30,7 @@ export default function Login() {
     }
     router.push("/dashboard");
   };
+  console.log("this is bothering ", envConfig.apiUrl);
   return (
     <section className="h-screen flex flex-col items-center sm:items-start sm:flex-row gap-10 sm:justify-center px-10">
       <div className="h-fit flex flex-col gap-6 mt-40 border-2 border-slate-200 p-10 rounded-xl">
