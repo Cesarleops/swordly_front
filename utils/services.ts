@@ -66,6 +66,7 @@ export const userLogin = async (formJson: any) => {
     return data;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 
@@ -169,5 +170,6 @@ export const deleteGroup = async (id: string) => {
     return data;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };

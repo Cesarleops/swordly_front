@@ -6,6 +6,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { userLogin } from "@/utils/services";
+import envConfig from "@/utils/constants";
 
 export default function Login() {
   const [errors, setErrors] = useState<any>({
@@ -21,6 +22,7 @@ export default function Login() {
     const formJson = Object.fromEntries(formData.entries());
     setLoading(true);
     const data = await userLogin(formJson);
+    console.log(data);
     setLoading(false);
     if (!data.success) {
       toast.error(data.message);
@@ -95,7 +97,7 @@ export default function Login() {
 
         <div className="flex flex-col gap-4  ">
           <Link
-            href="http://localhost:3031/api/login/github"
+            href={`${envConfig.apiUrl}/api/login/github`}
             className="p-2 border border-slate-200 rounded-md flex gap-2 justify-center items-center"
           >
             {Icons.github()}
@@ -104,7 +106,7 @@ export default function Login() {
             </p>
           </Link>
           <Link
-            href="http://localhost:3031/api/login/google"
+            href={`${envConfig.apiUrl}/api/login/google`}
             className="p-2  border border-slate-200 rounded-md flex gap-2 items-center justify-center"
           >
             {Icons.google()}

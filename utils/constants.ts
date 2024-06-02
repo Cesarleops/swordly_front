@@ -1,5 +1,5 @@
 const production = {
-  apiUrl: "",
+  apiUrl: "https://swordly.onrender.com",
 };
 
 const development = {
