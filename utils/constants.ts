@@ -1,6 +1,6 @@
 const production = {
   apiUrl: "https://swordly-production.up.railway.app/api",
-  clientUrl: "https://swordly-front.vercel.app",
+  clientUrl: "https://swordlyfront-production.up.railway.app",
 };
 
 const development = {
