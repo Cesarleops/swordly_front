@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../ui/icon";
 import { DropdownMenu } from "../ui/dropdown-menu";
+import envConfig from "@/utils/constants";
 
 export function Settings() {
   const pathname = usePathname();
@@ -48,7 +49,7 @@ export function Settings() {
           </li>
           <li>
             <Link
-              href="http://localhost:3031/api/logout"
+              href={`${envConfig.apiUrl}/logout`}
               className="flex gap-2 rounded-xl items-center p-2 hover:bg-[#fff5f5] text-[#f93863] font-normal "
             >
               {Icons.logOut()}
