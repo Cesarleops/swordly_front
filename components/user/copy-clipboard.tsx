@@ -1,3 +1,4 @@
+import envConfig from "@/utils/constants";
 import { toast } from "sonner";
 
 export const CopyClipboard = ({ short }: { short: string }) => {
@@ -5,9 +6,7 @@ export const CopyClipboard = ({ short }: { short: string }) => {
     console.log(navigator);
     console.log(navigator.clipboard);
     try {
-      await navigator.clipboard.writeText(
-        `http://localhost:3031/api/links/${short}`
-      );
+      await navigator.clipboard.writeText(`${envConfig.apiUrl}/links/${short}`);
       toast.success("Copied to clipboard");
     } catch (error) {
       toast.error("Something went wrong");
