@@ -37,7 +37,7 @@ export default function SignUp() {
       toast.error(data.message);
       return;
     }
-    router.push("/dashboard");
+    router.replace("/dashboard");
   };
   return (
     <section className="h-screen flex flex-col items-center sm:items-start sm:flex-row gap-10 sm:justify-center px-10">
