@@ -22,7 +22,7 @@ export const getUser = async () => {
     return data;
   } catch (error) {
     console.log("error yendo", error);
-    redirect(`${envConfig.clientUrl}/login`);
+    // redirect(`${envConfig.clientUrl}/login`);
   }
 };
 
