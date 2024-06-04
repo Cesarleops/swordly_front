@@ -7,11 +7,15 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { userLogin } from "@/utils/services";
 import envConfig from "@/utils/constants";
+import { InputError } from "@/components/ui/error";
 
 export default function Login() {
-  const [errors, setErrors] = useState<any>({
-    email: "",
-    password: "",
+  const [errors, setErrors] = useState<{
+    email: string[];
+    password: string[];
+  }>({
+    email: [],
+    password: [],
   });
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -20,9 +24,17 @@ export default function Login() {
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
+    const validateUserSignIn = userSchema.safeParse(formJson);
+    if (!validateUserSignIn.success) {
+      const format = validateUserSignIn.error.flatten();
+      setErrors({
+        email: format.fieldErrors.email || [],
+        password: format.fieldErrors.password || [],
+      });
+      return;
+    }
     setLoading(true);
     const data = await userLogin(formJson);
-    console.log(data);
     setLoading(false);
     if (!data.success) {
       toast.error(data.message);
@@ -30,7 +42,6 @@ export default function Login() {
     }
     router.push("/dashboard");
   };
-  console.log("this is bothering ", envConfig.apiUrl);
   return (
     <section className="h-screen flex flex-col items-center sm:items-start sm:flex-row gap-10 sm:justify-center px-10">
       <div className="h-fit flex flex-col gap-6 mt-40 border-2 border-slate-200 p-10 rounded-xl">
@@ -78,10 +89,8 @@ export default function Login() {
               />
               {Icons.password()}
             </div>
-            {errors.password ? (
-              <p className="text-red-500 text-sm text-pretty ">
-                {errors.password._errors[0]}
-              </p>
+            {errors.password.length > 0 ? (
+              <InputError id="password-error" errors={errors.password} />
             ) : null}
             <Link
               className="flex justify-end text-right text-bold text-blue-500 underline decoration-1"

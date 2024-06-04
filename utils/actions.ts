@@ -16,6 +16,7 @@ export const getUser = async () => {
     const data = await res.json();
     console.log("usuario", data);
     if (data.user === "Invalid User") {
+      console.log(envConfig);
       redirect(`${envConfig.clientUrl}/login`);
     }
     return data;

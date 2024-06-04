@@ -3,9 +3,18 @@ import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 import { updateGroup } from "@/utils/services";
+import { InputError } from "../ui/error";
+import { GroupSchema } from "@/utils/schemas";
 
 export const EditGroup = ({ id, name, description, available_links }: any) => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [errors, setErrors] = useState<{
+    name: string[];
+    description: string[];
+  }>({
+    name: [],
+    description: [],
+  });
   const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
   const router = useRouter();
 
@@ -15,6 +24,16 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
     const updatedLink = await updateGroup(id, selectedLinks, formJson);
+    const validateNewGroup = GroupSchema.safeParse(formJson);
+    if (!validateNewGroup.success) {
+      toast.error("Something went wrong creating your group");
+      const format = validateNewGroup.error.flatten();
+      setErrors({
+        name: format.fieldErrors.name || [],
+        description: format.fieldErrors.description || [],
+      });
+      return;
+    }
     if (updatedLink.success) {
       toast.success("Your Group was succesfully updated.");
       router.refresh();
@@ -65,7 +84,11 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
             id="name"
             defaultValue={name}
           />
-
+          {errors.name.length > 0 ? (
+            <InputError id="name" errors={errors.name} />
+          ) : (
+            ""
+          )}
           <label htmlFor="description" className="font-bold">
             Description
           </label>
@@ -75,7 +98,11 @@ export const EditGroup = ({ id, name, description, available_links }: any) => {
             defaultValue={description}
             id="description"
           ></textarea>
-
+          {errors.description.length > 0 ? (
+            <InputError id="name" errors={errors.description} />
+          ) : (
+            ""
+          )}
           <div>
             <p className="font-bold">Add more links</p>
             <div className="flex gap-2 flex-wrap">

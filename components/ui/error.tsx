@@ -13,7 +13,7 @@ export const InputError = ({
       className="  text-sm text-red-500"
     >
       {errors.map((err) => (
-        <p className="flex gap-2 items-center" key={err}>
+        <p className="flex gap-2 items-center max-w-xl text-pretty" key={err}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

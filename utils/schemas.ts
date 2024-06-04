@@ -23,6 +23,9 @@ export const LinkSchema = z.object({
     .max(10, {
       message: "A short link can't exceed 10 characters",
     }),
+  description: z.string().max(255, {
+    message: "Description can't exceed 255 characters",
+  }),
 });
 
 export const EditedLinkSchema = z.object({
@@ -36,13 +39,16 @@ export const EditedLinkSchema = z.object({
       message:
         "Please provide a valid url. \n use the prefix http:// or https://",
     }),
+  description: z.string().max(255, {
+    message: "Description can't exceed 255 characters",
+  }),
 });
 
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().regex(checkSafePassword, {
     message:
-      "password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and have at least 8 characters.",
+      "Password must have one uppercase, one lowercase ,one digit, one special character, and have at least 8 characters.",
   }),
 });
 
@@ -51,5 +57,7 @@ export const GroupSchema = z.object({
     .string()
     .trim()
     .min(3, { message: "Name of the group must have at least 3 characters" }),
-  description: z.string(),
+  description: z.string().max(255, {
+    message: "Description can't exceed 255 characters",
+  }),
 });

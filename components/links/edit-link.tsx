@@ -3,12 +3,16 @@ import { useState, FormEvent } from "react";
 import { Dialog } from "../ui/dialog";
 import { updateLink } from "@/utils/services";
 import { EditedLinkSchema, LinkSchema } from "@/utils/schemas";
+import { InputError } from "../ui/error";
 
 export const EditLink = ({ id, link }: { id: string; link: any }) => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [errors, setErrors] = useState<any>({
-    message: "",
-    errors: [],
+  const [errors, setErrors] = useState<{
+    original: string[];
+    description: string[];
+  }>({
+    original: [],
+    description: [],
   });
   const router = useRouter();
 
@@ -19,7 +23,11 @@ export const EditLink = ({ id, link }: { id: string; link: any }) => {
     const validateEditedLink = EditedLinkSchema.safeParse(formJson);
     console.log("el link es valido", validateEditedLink);
     if (!validateEditedLink.success) {
-      setErrors(validateEditedLink.error?.format());
+      const format = validateEditedLink.error.flatten();
+      setErrors({
+        original: format.fieldErrors.original || [],
+        description: format.fieldErrors.description || [],
+      });
       return;
     }
     const updatedLink = await updateLink(id, formJson);
@@ -64,6 +72,11 @@ export const EditLink = ({ id, link }: { id: string; link: any }) => {
             name="original"
             defaultValue={link.original}
           />
+          {errors.original.length > 0 ? (
+            <InputError id="original" errors={errors.original} />
+          ) : (
+            ""
+          )}
           <label htmlFor="short" className="flex flex-col gap-2 font-bold">
             Shortened URL
           </label>
@@ -87,6 +100,11 @@ export const EditLink = ({ id, link }: { id: string; link: any }) => {
             defaultValue={link.description}
             id="description"
           ></textarea>
+          {errors.description.length > 0 ? (
+            <InputError id="description-error" errors={errors.description} />
+          ) : (
+            ""
+          )}
           <button
             type="submit"
             className="bg-black text-white p-4 rounded-lg w-full mt-2"

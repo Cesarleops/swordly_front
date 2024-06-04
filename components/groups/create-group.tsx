@@ -17,18 +17,26 @@ export const CreateGroup = ({
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<any[]>([]);
-  const [errors, setErrors] = useState<any>(false);
+  const [errors, setErrors] = useState<{
+    name: string[];
+    description: string[];
+  }>({
+    name: [],
+    description: [],
+  });
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-
     const validateNewGroup = GroupSchema.safeParse(formJson);
-    console.log(validateNewGroup);
     if (!validateNewGroup.success) {
       toast.error("Something went wrong creating your group");
-      setErrors(validateNewGroup.error?.format());
+      const format = validateNewGroup.error.flatten();
+      setErrors({
+        name: format.fieldErrors.name || [],
+        description: format.fieldErrors.description || [],
+      });
       return;
     }
 
@@ -133,8 +141,8 @@ export const CreateGroup = ({
             aria-describedby="name"
             className="border-2 border-slate-200 rounded-lg p-2"
           />
-          {errors.name?._errors.length > 0 ? (
-            <InputError id="name" errors={errors.name._errors} />
+          {errors.name.length > 0 ? (
+            <InputError id="name" errors={errors.name} />
           ) : (
             ""
           )}
@@ -147,6 +155,11 @@ export const CreateGroup = ({
             placeholder="Track business urls."
             className="border-2 border-slate-200 rounded-lg p-2"
           />
+          {errors.description.length > 0 ? (
+            <InputError id="name" errors={errors.description} />
+          ) : (
+            ""
+          )}
           <div className="flex flex-col gap-4">
             <p className="mt-2 w-fit font-bold text-blue-500">
               Select the links you want to add to this group

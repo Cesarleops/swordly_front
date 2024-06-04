@@ -12,9 +12,14 @@ import { Icons } from "../ui/icon";
 export function CreateLink() {
   const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({
-    original: undefined,
-    short: undefined,
+  const [errors, setErrors] = useState<{
+    original: string[];
+    short: string[];
+    description: string[];
+  }>({
+    original: [],
+    short: [],
+    description: [],
   });
   const router = useRouter();
 
@@ -27,8 +32,12 @@ export function CreateLink() {
 
     if (!validateNewLink.success) {
       toast.error("Something went wrong creating your link");
-      console.log(validateNewLink.error?.format());
-      setErrors(validateNewLink.error?.format());
+      const format = validateNewLink.error.flatten();
+      setErrors({
+        original: format.fieldErrors.original || [],
+        short: format.fieldErrors.short || [],
+        description: format.fieldErrors.description || [],
+      });
       return;
     }
 
@@ -48,7 +57,6 @@ export function CreateLink() {
       }
       toast.success("Your was link created");
       form.reset();
-      setErrors({});
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong creating your link");
@@ -84,8 +92,8 @@ export function CreateLink() {
               aria-describedby="original"
             />
           </label>
-          {errors && errors.original?._errors.length > 0 ? (
-            <InputError id="original" errors={errors.original?._errors} />
+          {errors.original.length > 0 ? (
+            <InputError id="original" errors={errors.original} />
           ) : (
             ""
           )}
@@ -100,8 +108,8 @@ export function CreateLink() {
               aria-describedby="short"
             />
           </label>
-          {errors.short?._errors.length > 0 ? (
-            <InputError id="short" errors={errors.short._errors} />
+          {errors.short.length > 0 ? (
+            <InputError id="short" errors={errors.short} />
           ) : (
             ""
           )}
@@ -111,8 +119,14 @@ export function CreateLink() {
               placeholder="Optional"
               name="description"
               className="border-2 border-slate-200 rounded-lg p-2"
+              aria-describedby="description-error"
             ></textarea>
           </label>
+          {errors.description.length > 0 ? (
+            <InputError id="description-error" errors={errors.description} />
+          ) : (
+            ""
+          )}
           <button className="bg-black text-white font-mono p-5 rounded-lg">
             Create
           </button>

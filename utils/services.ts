@@ -173,3 +173,21 @@ export const deleteGroup = async (id: string) => {
     return error;
   }
 };
+
+export const userSignUp = async (formJson: any) => {
+  try {
+    const res = await fetch(`${envConfig.apiUrl}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formJson),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

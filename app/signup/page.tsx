@@ -5,12 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import envConfig from "@/utils/constants";
+import { userSchema } from "@/utils/schemas";
+import { InputError } from "@/components/ui/error";
+import { userSignUp } from "@/utils/services";
 
 export default function SignUp() {
-  const [errors, setErrors] = useState<any>({
-    password: {
-      _errors: [],
-    },
+  const [errors, setErrors] = useState<{
+    email: string[];
+    password: string[];
+  }>({
+    email: [],
+    password: [],
   });
   const router = useRouter();
   const handleSubmit = async (e: FormEvent) => {
@@ -18,17 +23,16 @@ export default function SignUp() {
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(envConfig);
-    const res = await fetch(`${envConfig.apiUrl}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(formJson),
-    });
-    const data = await res.json();
-    console.log("reg", data);
+    const validateUserSignIn = userSchema.safeParse(formJson);
+    if (!validateUserSignIn.success) {
+      const format = validateUserSignIn.error.flatten();
+      setErrors({
+        email: format.fieldErrors.email || [],
+        password: format.fieldErrors.password || [],
+      });
+      return;
+    }
+    const data = await userSignUp(formJson);
     if (!data.success) {
       toast.error(data.message);
       return;
@@ -59,10 +63,14 @@ export default function SignUp() {
                 type="email"
                 className="w-full bg-none"
                 name="email"
+                aria-describedby="email-error"
                 required
               />
               {Icons.email()}
             </div>
+            {errors.email.length > 0 ? (
+              <InputError id="email-error" errors={errors.email} />
+            ) : null}
           </fieldset>
           <fieldset className="w-full">
             <label htmlFor="password" className="text-lg">
@@ -79,10 +87,8 @@ export default function SignUp() {
               />
               {Icons.password()}
             </div>
-            {errors.password._errors.length > 0 ? (
-              <p className="text-red-500 text-sm text-pretty ">
-                {errors.password._errors[0]}
-              </p>
+            {errors.password.length > 0 ? (
+              <InputError id="password-error" errors={errors.password} />
             ) : null}
           </fieldset>
           <button className="bg-black rounded-lg text-white  w-full p-4 font-mono">
