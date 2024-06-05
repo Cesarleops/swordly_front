@@ -22,6 +22,11 @@ export const getUser = async () => {
     return data;
   } catch (error) {
     console.log("error yendo", error);
+
+    if (process.env.NODE_ENV === "development") {
+      redirect(`http://localhost:3000/login`);
+      return;
+    }
     redirect(`${envConfig.clientUrl}/login`);
   }
 };

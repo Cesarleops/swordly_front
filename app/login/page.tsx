@@ -38,6 +38,8 @@ export default function Login() {
     setLoading(false);
     if (!data.success) {
       toast.error(data.message);
+      setLoading(false);
+
       return;
     }
     router.push("/dashboard");

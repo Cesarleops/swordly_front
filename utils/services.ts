@@ -71,17 +71,25 @@ export const userLogin = async (formJson: any) => {
 };
 
 export const createNewGroup = async (formJson: any, selectedLinks: any) => {
-  const res = await fetch(`${envConfig.apiUrl}/groups`, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({
-      name: formJson.name,
-      description: formJson.description,
-      links: selectedLinks,
-    }),
-  });
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(`${envConfig.apiUrl}/groups`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formJson.name,
+        description: formJson.description,
+        links: selectedLinks,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const resetPassword = async (formData: any) => {

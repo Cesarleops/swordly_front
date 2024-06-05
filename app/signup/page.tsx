@@ -4,7 +4,6 @@ import { Icons } from "../../components/ui/icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import envConfig from "@/utils/constants";
 import { userSchema } from "@/utils/schemas";
 import { InputError } from "@/components/ui/error";
 import { userSignUp } from "@/utils/services";
@@ -18,6 +17,7 @@ export default function SignUp() {
     password: [],
   });
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target;
@@ -32,11 +32,15 @@ export default function SignUp() {
       });
       return;
     }
+    setLoading(true);
     const data = await userSignUp(formJson);
     if (!data.success) {
       toast.error(data.message);
+      setLoading(false);
+
       return;
     }
+    setLoading(false);
     router.replace("/dashboard");
   };
   return (
@@ -94,6 +98,7 @@ export default function SignUp() {
           <button className="bg-black rounded-lg text-white  w-full p-4 font-mono">
             Sign up
           </button>
+          {loading && Icons.loading()}
         </form>
 
         <div className="flex flex-col gap-4  ">

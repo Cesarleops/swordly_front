@@ -30,6 +30,8 @@ export const CreateGroup = ({
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
     const validateNewGroup = GroupSchema.safeParse(formJson);
+    console.log(formJson);
+    console.log(validateNewGroup);
     if (!validateNewGroup.success) {
       toast.error("Something went wrong creating your group");
       const format = validateNewGroup.error.flatten();
